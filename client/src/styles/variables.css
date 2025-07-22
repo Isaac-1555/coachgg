@@ -1,0 +1,17 @@
+/* 🎨 CoachGG Design System - Color Palette */
+:root {
+    /* Colors */
+    --color-background: #0D0D0D;
+    --color-card-background: #1A1A1A;
+    --color-neon-green: #39FF14;
+    --color-neon-purple: #9B30FF;
+    --color-primary-text: #FFFFFF;
+    --color-secondary-text: #AAAAAA;
+  
+    /* Layout & Sizing */
+    --border-radius: 1rem; /* Equivalent to rounded-2xl */
+    --card-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.2), 0 4px 6px -2px rgba(0, 0, 0, 0.1);
+  
+    /* Transitions */
+    --transition-speed: 200ms ease-in-out;
+  }
