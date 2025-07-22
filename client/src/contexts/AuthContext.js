@@ -55,11 +55,18 @@ export const AuthProvider = ({ children }) => {
     try {
       console.log('Fetching user profile for ID:', userId);
       
-      const { data, error } = await supabase
+      // Add timeout to prevent hanging
+      const timeoutPromise = new Promise((_, reject) => 
+        setTimeout(() => reject(new Error('Profile fetch timeout')), 10000)
+      );
+      
+      const fetchPromise = supabase
         .from('users')
         .select('*')
         .eq('id', userId)
         .single();
+      
+      const { data, error } = await Promise.race([fetchPromise, timeoutPromise]);
 
       console.log('Profile query result:', { data, error });
 

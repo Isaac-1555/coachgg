@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { useAuth } from '../contexts/AuthContext';
 import Sidebar from './Sidebar';
 import Overview from './tabs/Overview';
+import SoloTracker from './tabs/SoloTracker';
 import '../styles/Dashboard.css';
 
 const Dashboard = () => {
@@ -13,7 +14,7 @@ const Dashboard = () => {
       case 'overview':
         return <Overview user={user} />;
       case 'solo':
-        return <div className="tab-content">Solo Tracker - Coming Soon</div>;
+        return <SoloTracker user={user} />;
       case 'team':
         return <div className="tab-content">Team Management - Coming Soon</div>;
       case 'manager':
