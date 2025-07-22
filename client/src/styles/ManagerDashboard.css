@@ -1,0 +1,275 @@
+/* ManagerDashboard.css - Manager dashboard styling */
+
+.manager-dashboard {
+  padding: 2rem;
+  max-width: 1400px;
+  margin: 0 auto;
+}
+
+.manager-dashboard.loading {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 400px;
+}
+
+/* Header */
+.manager-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 2rem;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+
+.header-content h1 {
+  color: var(--color-primary-text);
+  font-size: 2rem;
+  font-weight: bold;
+  margin: 0 0 0.5rem;
+}
+
+.header-content p {
+  color: var(--color-secondary-text);
+  font-size: 1rem;
+  margin: 0;
+}
+
+.header-actions {
+  display: flex;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+
+.add-note-button,
+.create-event-button {
+  border: none;
+  border-radius: 0.75rem;
+  padding: 0.875rem 1.5rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all var(--transition-speed);
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 1rem;
+}
+
+.add-note-button {
+  background: transparent;
+  color: var(--color-neon-purple);
+  border: 1px solid var(--color-neon-purple);
+}
+
+.add-note-button:hover {
+  background: var(--color-neon-purple);
+  color: var(--color-background);
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(155, 48, 255, 0.3);
+}
+
+.create-event-button {
+  background: var(--color-neon-green);
+  color: var(--color-background);
+}
+
+.create-event-button:hover {
+  background: #2ECC11;
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(57, 255, 20, 0.3);
+}
+
+.button-icon {
+  font-size: 1.2rem;
+}
+
+/* Team Selector */
+.team-selector {
+  background: var(--color-card-background);
+  border: 1px solid #333333;
+  border-radius: var(--border-radius);
+  padding: 1.5rem;
+  margin-bottom: 2rem;
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+
+.team-selector label {
+  color: var(--color-primary-text);
+  font-weight: 600;
+  font-size: 1rem;
+}
+
+.team-selector select {
+  background: #0D0D0D;
+  border: 1px solid #333333;
+  border-radius: 0.5rem;
+  color: var(--color-primary-text);
+  padding: 0.75rem 1rem;
+  font-size: 1rem;
+  min-width: 200px;
+}
+
+.team-selector select:focus {
+  outline: none;
+  border-color: var(--color-neon-green);
+  box-shadow: 0 0 0 2px rgba(57, 255, 20, 0.1);
+}
+
+.team-info {
+  color: var(--color-secondary-text);
+  font-size: 0.9rem;
+  margin-left: auto;
+}
+
+/* View Tabs */
+.view-tabs {
+  display: flex;
+  gap: 0.5rem;
+  margin-bottom: 2rem;
+  background: var(--color-card-background);
+  border-radius: 0.75rem;
+  padding: 0.5rem;
+  border: 1px solid #333333;
+}
+
+.tab {
+  flex: 1;
+  padding: 0.875rem 1.5rem;
+  background: transparent;
+  border: none;
+  color: var(--color-secondary-text);
+  font-weight: 500;
+  border-radius: 0.5rem;
+  cursor: pointer;
+  transition: all var(--transition-speed);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+}
+
+.tab:hover {
+  color: var(--color-primary-text);
+  background: rgba(255, 255, 255, 0.05);
+}
+
+.tab.active {
+  background: var(--color-neon-green);
+  color: var(--color-background);
+  box-shadow: 0 2px 8px rgba(57, 255, 20, 0.2);
+}
+
+/* Content */
+.manager-content {
+  min-height: 400px;
+}
+
+/* Empty State */
+.empty-state {
+  background: var(--color-card-background);
+  border: 1px solid #333333;
+  border-radius: var(--border-radius);
+  padding: 4rem 2rem;
+  text-align: center;
+  max-width: 600px;
+  margin: 2rem auto;
+}
+
+.empty-icon {
+  font-size: 5rem;
+  margin-bottom: 2rem;
+  opacity: 0.5;
+}
+
+.empty-state h3 {
+  color: var(--color-primary-text);
+  font-size: 1.5rem;
+  font-weight: 600;
+  margin: 0 0 1rem;
+}
+
+.empty-state p {
+  color: var(--color-secondary-text);
+  font-size: 1.1rem;
+  line-height: 1.6;
+  margin: 0 0 2.5rem;
+}
+
+.cta-button {
+  background: var(--color-neon-green);
+  color: var(--color-background);
+  border: none;
+  border-radius: 0.75rem;
+  padding: 1rem 2rem;
+  font-weight: 600;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: all var(--transition-speed);
+}
+
+.cta-button:hover {
+  background: #2ECC11;
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(57, 255, 20, 0.3);
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .manager-dashboard {
+    padding: 1rem;
+  }
+  
+  .manager-header {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+  
+  .header-actions {
+    width: 100%;
+  }
+  
+  .add-note-button,
+  .create-event-button {
+    flex: 1;
+    justify-content: center;
+  }
+  
+  .header-content h1 {
+    font-size: 1.5rem;
+  }
+  
+  .team-selector {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.75rem;
+  }
+  
+  .team-selector select {
+    width: 100%;
+    min-width: auto;
+  }
+  
+  .team-info {
+    margin-left: 0;
+  }
+  
+  .view-tabs {
+    flex-direction: column;
+  }
+  
+  .tab {
+    justify-content: flex-start;
+  }
+  
+  .empty-state {
+    padding: 2rem 1rem;
+  }
+  
+  .empty-icon {
+    font-size: 3rem;
+  }
+}

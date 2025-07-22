@@ -1,0 +1,54 @@
+/* AddNoteModal.css - Add note modal styling */
+
+.add-note-form {
+  padding: 1.5rem;
+}
+
+/* Note Templates */
+.note-templates {
+  margin: 1.5rem 0;
+  padding: 1.5rem;
+  background: rgba(155, 48, 255, 0.05);
+  border: 1px solid rgba(155, 48, 255, 0.2);
+  border-radius: 0.75rem;
+}
+
+.note-templates h4 {
+  color: var(--color-primary-text);
+  font-size: 1rem;
+  font-weight: 600;
+  margin: 0 0 1rem;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.template-buttons {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+  gap: 0.75rem;
+}
+
+.template-button {
+  background: transparent;
+  border: 1px solid #333333;
+  color: var(--color-secondary-text);
+  border-radius: 0.5rem;
+  padding: 0.75rem 0.5rem;
+  font-size: 0.85rem;
+  cursor: pointer;
+  transition: all var(--transition-speed);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.25rem;
+  text-align: center;
+}
+
+.template-button:hover {
+  border-color: var(--color-neon-purple);
+  color: var(--color-neon-purple);
+  background: rgba(155, 48, 255, 0.05);
+}
+
+/* Inherit other styles from CreateEventModal.css and CreateTeamModal.css */

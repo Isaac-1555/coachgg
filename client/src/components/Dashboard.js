@@ -4,6 +4,7 @@ import Sidebar from './Sidebar';
 import Overview from './tabs/Overview';
 import SoloTracker from './tabs/SoloTracker';
 import TeamManagement from './tabs/TeamManagement';
+import ManagerDashboard from './tabs/ManagerDashboard';
 import '../styles/Dashboard.css';
 
 const Dashboard = () => {
@@ -19,7 +20,7 @@ const Dashboard = () => {
       case 'team':
         return <TeamManagement user={user} />;
       case 'manager':
-        return <div className="tab-content">Manager Dashboard - Coming Soon</div>;
+        return <ManagerDashboard user={user} />;
       case 'ai-coach':
         return <div className="tab-content">AI Coach - Coming Soon</div>;
       case 'settings':

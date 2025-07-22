@@ -25,41 +25,87 @@ const TeamManagement = () => {
     try {
       setLoading(true);
       
-      // Get teams where user is a member
-      const { data: teamMembers, error } = await supabase
-        .from('team_members')
+      // Get teams where user is captain
+      const { data: captainTeams, error: captainError } = await supabase
+        .from('teams')
         .select(`
           *,
-          teams (
-            *,
-            captain:users!teams_captain_id_fkey (
-              id,
-              username,
-              profile_avatar
-            )
+          captain:users!teams_captain_id_fkey (
+            id,
+            username,
+            profile_avatar
           )
+        `)
+        .eq('captain_id', user.id);
+
+      if (captainError) {
+        console.error('Error fetching captain teams:', captainError);
+      }
+
+      // Get teams where user is a member (but not captain)
+      const { data: memberTeams, error: memberError } = await supabase
+        .from('team_members')
+        .select(`
+          nickname,
+          joined_at,
+          team_id
         `)
         .eq('user_id', user.id);
 
-      if (error) {
-        console.error('Error fetching teams:', error);
-        return;
+      if (memberError) {
+        console.error('Error fetching member teams:', memberError);
       }
 
-      // Extract teams and add member info
-      const userTeams = teamMembers.map(member => ({
-        ...member.teams,
-        memberInfo: {
-          nickname: member.nickname,
-          joined_at: member.joined_at
-        }
-      }));
+      // For member teams, fetch the team details separately
+      const memberTeamDetails = [];
+      if (memberTeams && memberTeams.length > 0) {
+        for (const membership of memberTeams) {
+          // Skip if user is already captain of this team
+          const isAlreadyCaptain = captainTeams?.some(team => team.id === membership.team_id);
+          if (isAlreadyCaptain) continue;
 
-      setTeams(userTeams);
+          const { data: teamData, error: teamError } = await supabase
+            .from('teams')
+            .select(`
+              *,
+              captain:users!teams_captain_id_fkey (
+                id,
+                username,
+                profile_avatar
+              )
+            `)
+            .eq('id', membership.team_id)
+            .single();
+
+          if (!teamError && teamData) {
+            memberTeamDetails.push({
+              ...teamData,
+              memberInfo: {
+                nickname: membership.nickname,
+                joined_at: membership.joined_at
+              }
+            });
+          }
+        }
+      }
+
+      // Combine captain teams and member teams
+      const allTeams = [
+        ...(captainTeams || []).map(team => ({
+          ...team,
+          memberInfo: {
+            nickname: user.username,
+            joined_at: team.created_at
+          }
+        })),
+        ...memberTeamDetails
+      ];
+
+      setTeams(allTeams);
       
       // Auto-select first team if available
-      if (userTeams.length > 0 && !selectedTeam) {
-        setSelectedTeam(userTeams[0]);
+      if (allTeams.length > 0 && !selectedTeam) {
+        setSelectedTeam(allTeams[0]);
       }
     } catch (error) {
       console.error('Error in fetchUserTeams:', error);
