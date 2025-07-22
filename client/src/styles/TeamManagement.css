@@ -1,0 +1,244 @@
+/* TeamManagement.css - Team management tab styling */
+
+.team-management {
+  padding: 2rem;
+  max-width: 1400px;
+  margin: 0 auto;
+}
+
+.team-management.loading {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 400px;
+}
+
+/* Header */
+.team-management-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 2rem;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+
+.header-content h1 {
+  color: var(--color-primary-text);
+  font-size: 2rem;
+  font-weight: bold;
+  margin: 0 0 0.5rem;
+}
+
+.header-content p {
+  color: var(--color-secondary-text);
+  font-size: 1rem;
+  margin: 0;
+}
+
+.header-actions {
+  display: flex;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+
+.join-team-button,
+.create-team-button {
+  border: none;
+  border-radius: 0.75rem;
+  padding: 0.875rem 1.5rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all var(--transition-speed);
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 1rem;
+}
+
+.join-team-button {
+  background: transparent;
+  color: var(--color-neon-purple);
+  border: 1px solid var(--color-neon-purple);
+}
+
+.join-team-button:hover {
+  background: var(--color-neon-purple);
+  color: var(--color-background);
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(155, 48, 255, 0.3);
+}
+
+.create-team-button {
+  background: var(--color-neon-green);
+  color: var(--color-background);
+}
+
+.create-team-button:hover {
+  background: #2ECC11;
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(57, 255, 20, 0.3);
+}
+
+.button-icon {
+  font-size: 1.2rem;
+  font-weight: bold;
+}
+
+/* Empty State */
+.empty-state {
+  background: var(--color-card-background);
+  border: 1px solid #333333;
+  border-radius: var(--border-radius);
+  padding: 4rem 2rem;
+  text-align: center;
+  max-width: 600px;
+  margin: 2rem auto;
+}
+
+.empty-icon {
+  font-size: 5rem;
+  margin-bottom: 2rem;
+  opacity: 0.5;
+}
+
+.empty-state h3 {
+  color: var(--color-primary-text);
+  font-size: 1.5rem;
+  font-weight: 600;
+  margin: 0 0 1rem;
+}
+
+.empty-state p {
+  color: var(--color-secondary-text);
+  font-size: 1.1rem;
+  line-height: 1.6;
+  margin: 0 0 2.5rem;
+}
+
+.empty-actions {
+  display: flex;
+  gap: 1rem;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.cta-button {
+  border: none;
+  border-radius: 0.75rem;
+  padding: 1rem 2rem;
+  font-weight: 600;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: all var(--transition-speed);
+}
+
+.cta-button.primary {
+  background: var(--color-neon-green);
+  color: var(--color-background);
+}
+
+.cta-button.primary:hover {
+  background: #2ECC11;
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(57, 255, 20, 0.3);
+}
+
+.cta-button.secondary {
+  background: transparent;
+  color: var(--color-neon-purple);
+  border: 1px solid var(--color-neon-purple);
+}
+
+.cta-button.secondary:hover {
+  background: var(--color-neon-purple);
+  color: var(--color-background);
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(155, 48, 255, 0.3);
+}
+
+/* Team Layout */
+.team-layout {
+  display: grid;
+  grid-template-columns: 1fr 2fr;
+  gap: 2rem;
+  align-items: start;
+}
+
+/* Team List */
+.team-list h3 {
+  color: var(--color-primary-text);
+  font-size: 1.25rem;
+  font-weight: 600;
+  margin: 0 0 1.5rem;
+}
+
+.teams-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+/* Team Details */
+.team-details {
+  background: var(--color-card-background);
+  border: 1px solid #333333;
+  border-radius: var(--border-radius);
+  padding: 0;
+  overflow: hidden;
+  position: sticky;
+  top: 2rem;
+}
+
+/* Responsive Design */
+@media (max-width: 1024px) {
+  .team-layout {
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+  }
+  
+  .team-details {
+    position: static;
+  }
+}
+
+@media (max-width: 768px) {
+  .team-management {
+    padding: 1rem;
+  }
+  
+  .team-management-header {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+  
+  .header-actions {
+    width: 100%;
+  }
+  
+  .join-team-button,
+  .create-team-button {
+    flex: 1;
+    justify-content: center;
+  }
+  
+  .header-content h1 {
+    font-size: 1.5rem;
+  }
+  
+  .empty-state {
+    padding: 2rem 1rem;
+  }
+  
+  .empty-icon {
+    font-size: 3rem;
+  }
+  
+  .empty-actions {
+    flex-direction: column;
+  }
+  
+  .cta-button {
+    width: 100%;
+  }
+}

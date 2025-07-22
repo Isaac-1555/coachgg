@@ -3,6 +3,7 @@ import { useAuth } from '../contexts/AuthContext';
 import Sidebar from './Sidebar';
 import Overview from './tabs/Overview';
 import SoloTracker from './tabs/SoloTracker';
+import TeamManagement from './tabs/TeamManagement';
 import '../styles/Dashboard.css';
 
 const Dashboard = () => {
@@ -16,7 +17,7 @@ const Dashboard = () => {
       case 'solo':
         return <SoloTracker user={user} />;
       case 'team':
-        return <div className="tab-content">Team Management - Coming Soon</div>;
+        return <TeamManagement user={user} />;
       case 'manager':
         return <div className="tab-content">Manager Dashboard - Coming Soon</div>;
       case 'ai-coach':
