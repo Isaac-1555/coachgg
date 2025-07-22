@@ -39,9 +39,13 @@ export const AuthProvider = ({ children }) => {
         console.log('Auth state changed:', event, session);
         setSession(session);
         
-        if (session?.user) {
-          await fetchUserProfile(session.user.id);
-        } else {
+        // Only fetch profile on specific events to avoid loops
+        if (session?.user && (event === 'SIGNED_IN' || event === 'INITIAL_SESSION')) {
+          // Check if we already have this user to avoid duplicate fetches
+          if (!user || user.id !== session.user.id) {
+            await fetchUserProfile(session.user.id);
+          }
+        } else if (!session) {
           setUser(null);
         }
         setLoading(false);
@@ -109,10 +113,14 @@ export const AuthProvider = ({ children }) => {
       }
 
       console.log('User profile loaded successfully');
+      
+      // Get current session for email
+      const { data: { session: currentSession } } = await supabase.auth.getSession();
+      
       setUser({
         id: data.id,
         username: data.username,
-        email: session?.user?.email,
+        email: currentSession?.user?.email,
         role: data.role,
         profile_avatar: data.profile_avatar,
         created_at: data.created_at
