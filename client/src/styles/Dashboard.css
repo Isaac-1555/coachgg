@@ -1,0 +1,54 @@
+/* Dashboard.css - Main dashboard layout */
+
+.dashboard {
+  display: flex;
+  height: 100vh;
+  background: var(--color-background);
+}
+
+.dashboard-main {
+  flex: 1;
+  overflow-y: auto;
+  background: var(--color-background);
+}
+
+.tab-content {
+  padding: 2rem;
+  color: var(--color-primary-text);
+  text-align: center;
+  font-size: 1.2rem;
+}
+
+/* Loading Spinner */
+.loading-container {
+  min-height: 100vh;
+  background: var(--color-background);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.loading-spinner {
+  text-align: center;
+}
+
+.spinner {
+  width: 40px;
+  height: 40px;
+  border: 3px solid #333333;
+  border-top: 3px solid var(--color-neon-green);
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+  margin: 0 auto 1rem;
+}
+
+.loading-spinner p {
+  color: var(--color-neon-green);
+  font-size: 1.1rem;
+  margin: 0;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
