@@ -4,6 +4,14 @@ import { supabase } from '../../config/supabase';
 import WinRateChart from '../charts/WinRateChart';
 import GameDistributionChart from '../charts/GameDistributionChart';
 import AchievementDisplay from '../AchievementDisplay';
+import { 
+  IconDeviceGamepad2, 
+  IconTrophy, 
+  IconTrendingUp, 
+  IconClock,
+  IconTarget,
+  IconRobot
+} from '@tabler/icons-react';
 import '../../styles/Overview.css';
 import '../../styles/Charts.css';
 
@@ -115,7 +123,7 @@ const Overview = ({ user }) => {
               <p className="stat-label">Total Matches</p>
               <p className="stat-value">{stats.totalMatches}</p>
             </div>
-            <div className="stat-icon">🎮</div>
+            <div className="stat-icon"><IconDeviceGamepad2 size={24} /></div>
           </div>
         </div>
 
@@ -125,7 +133,7 @@ const Overview = ({ user }) => {
               <p className="stat-label">Win Rate</p>
               <p className="stat-value">{stats.winRate}%</p>
             </div>
-            <div className="stat-icon">🏆</div>
+            <div className="stat-icon"><IconTrophy size={24} /></div>
           </div>
           <div className="stat-progress">
             <div className="progress-bar" style={{ width: `${stats.winRate}%` }}></div>
@@ -138,7 +146,7 @@ const Overview = ({ user }) => {
               <p className="stat-label">Current Streak</p>
               <p className="stat-value">{stats.currentStreak}</p>
             </div>
-            <div className="stat-icon">📈</div>
+            <div className="stat-icon"><IconTrendingUp size={24} /></div>
           </div>
         </div>
 
@@ -148,7 +156,7 @@ const Overview = ({ user }) => {
               <p className="stat-label">Hours Played</p>
               <p className="stat-value">{stats.hoursPlayed}</p>
             </div>
-            <div className="stat-icon">⏰</div>
+            <div className="stat-icon"><IconClock size={24} /></div>
           </div>
         </div>
       </div>
@@ -171,13 +179,13 @@ const Overview = ({ user }) => {
         {/* Recent Matches */}
         <div className="content-card">
           <div className="card-header">
-            <h3>🎮 Recent Matches</h3>
+            <h3><IconDeviceGamepad2 size={20} style={{marginRight: '6px'}} />Recent Matches</h3>
             <p>Your latest gaming sessions</p>
           </div>
           <div className="card-content">
             {matches.length === 0 ? (
               <div className="empty-state">
-                <div className="empty-icon">🎯</div>
+                <div className="empty-icon"><IconTarget size={48} /></div>
                 <h4>No matches yet</h4>
                 <p>Start tracking your games to see your progress here!</p>
                 <button className="cta-button">Add Your First Match</button>
@@ -213,7 +221,7 @@ const Overview = ({ user }) => {
       <div className="ai-coach-card">
         <div className="ai-coach-content">
           <div className="ai-coach-icon">
-            <span>🤖</span>
+            <IconRobot size={16} style={{marginRight: '4px'}} />
           </div>
           <div className="ai-coach-text">
             <h3>AI Coach Insight</h3>

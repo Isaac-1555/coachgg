@@ -2,7 +2,7 @@ import React from 'react';
 import { useAuth } from '../contexts/AuthContext';
 import { 
   IconTrophy,
-  IconChartBar,
+  IconLayoutDashboard,
   IconDeviceGamepad2,
   IconUsers,
   IconCrown,
@@ -13,7 +13,7 @@ import {
 import '../styles/Sidebar.css';
 
 const sidebarItems = [
-  { id: 'overview', label: 'Overview', icon: IconChartBar },
+  { id: 'overview', label: 'Overview', icon: IconLayoutDashboard },
   { id: 'solo', label: 'Solo', icon: IconDeviceGamepad2 },
   { id: 'team', label: 'Team', icon: IconUsers },
   { id: 'manager', label: 'Manager', icon: IconCrown },

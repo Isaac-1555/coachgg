@@ -3,6 +3,16 @@ import { useAuth } from '../../contexts/AuthContext';
 import { supabase } from '../../config/supabase';
 import { openRouterService } from '../../config/openrouter';
 import { achievementService } from '../../services/achievementService';
+import { 
+  IconRobot, 
+  IconLayoutDashboard, 
+  IconTrendingUp, 
+  IconTarget, 
+  IconDeviceGamepad2,
+  IconSearch,
+  IconArrowLeft,
+  IconClock
+} from '@tabler/icons-react';
 import '../../styles/AICoach.css';
 
 const AICoach = () => {
@@ -190,7 +200,7 @@ const AICoach = () => {
     <div className="ai-coach">
       <div className="ai-coach-header">
         <div className="header-content">
-          <h1>🤖 AI Coach</h1>
+          <h1><IconRobot size={24} style={{marginRight: '8px'}} />AI Coach</h1>
           <p>Get personalized insights and coaching recommendations powered by AI</p>
         </div>
         <button 
@@ -238,25 +248,25 @@ const AICoach = () => {
           className={`tab ${selectedAnalysis === 'overview' ? 'active' : ''}`}
           onClick={() => setSelectedAnalysis('overview')}
         >
-          📊 Overview Analysis
+          <IconLayoutDashboard size={16} style={{marginRight: '6px'}} />Overview Analysis
         </button>
         <button 
           className={`tab ${selectedAnalysis === 'trends' ? 'active' : ''}`}
           onClick={() => setSelectedAnalysis('trends')}
         >
-          📈 Trend Analysis
+          <IconTrendingUp size={16} style={{marginRight: '6px'}} />Trend Analysis
         </button>
         <button 
           className={`tab ${selectedAnalysis === 'goals' ? 'active' : ''}`}
           onClick={() => setSelectedAnalysis('goals')}
         >
-          🎯 Goal Suggestions
+          <IconTarget size={16} style={{marginRight: '6px'}} />Goal Suggestions
         </button>
         <button 
           className={`tab ${selectedAnalysis === 'matches' ? 'active' : ''}`}
           onClick={() => setSelectedAnalysis('matches')}
         >
-          🎮 Match Analysis
+          <IconDeviceGamepad2 size={16} style={{marginRight: '6px'}} />Match Analysis
         </button>
       </div>
 
@@ -339,7 +349,7 @@ const AICoach = () => {
                       </span>
                     </div>
                     <div className="analyze-button">
-                      {generatingInsights ? '⏳ Analyzing...' : '🔍 Analyze'}
+                      {generatingInsights ? <><IconClock size={14} style={{marginRight: '4px'}} />Analyzing...</> : <><IconSearch size={14} style={{marginRight: '4px'}} />Analyze</>}
                     </div>
                   </div>
                 ))}
@@ -371,7 +381,7 @@ const AICoach = () => {
                     className="back-button"
                     onClick={() => setSelectedAnalysis('matches')}
                   >
-                    ← Back to Matches
+                    <IconArrowLeft size={16} style={{marginRight: '4px'}} />Back to Matches
                   </button>
                 </div>
                 <div className="ai-insight">

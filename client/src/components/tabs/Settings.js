@@ -3,6 +3,15 @@ import { useAuth } from '../../contexts/AuthContext';
 import { supabase } from '../../config/supabase';
 import { FREE_MODELS } from '../../config/openrouter';
 import FileUpload from '../FileUpload';
+import { 
+  IconSettings, 
+  IconUser, 
+  IconRobot, 
+  IconLock,
+  IconDeviceFloppy,
+  IconCheck,
+  IconX
+} from '@tabler/icons-react';
 import '../../styles/Settings.css';
 
 const Settings = () => {
@@ -137,7 +146,7 @@ const Settings = () => {
   return (
     <div className="settings">
       <div className="settings-header">
-        <h1>⚙️ Settings</h1>
+        <h1><IconSettings size={24} style={{marginRight: '8px'}} />Settings</h1>
         <p>Customize your CoachGG experience</p>
       </div>
 
@@ -145,7 +154,7 @@ const Settings = () => {
         {/* Profile Settings */}
         <div className="settings-section">
           <div className="section-header">
-            <h2>👤 Profile Settings</h2>
+            <h2><IconUser size={20} style={{marginRight: '6px'}} />Profile Settings</h2>
             <p>Manage your personal information and profile</p>
           </div>
 
@@ -232,7 +241,7 @@ const Settings = () => {
         {/* AI Coach Configuration */}
         <div className="settings-section">
           <div className="section-header">
-            <h2>🤖 AI Coach Configuration</h2>
+            <h2><IconRobot size={20} style={{marginRight: '6px'}} />AI Coach Configuration</h2>
             <p>Customize your AI coaching experience</p>
           </div>
 
@@ -291,7 +300,7 @@ const Settings = () => {
         {/* Privacy & Data Settings */}
         <div className="settings-section">
           <div className="section-header">
-            <h2>🔒 Privacy & Data</h2>
+            <h2><IconLock size={20} style={{marginRight: '6px'}} />Privacy & Data</h2>
             <p>Control how your data is shared and used</p>
           </div>
 
@@ -356,7 +365,7 @@ const Settings = () => {
               </>
             ) : (
               <>
-                <span className="button-icon">💾</span>
+                <IconDeviceFloppy size={16} style={{marginRight: '6px'}} />
                 Save Settings
               </>
             )}
@@ -364,8 +373,8 @@ const Settings = () => {
 
           {saveStatus && (
             <div className={`save-status ${saveStatus}`}>
-              {saveStatus === 'success' && '✅ Settings saved successfully!'}
-              {saveStatus === 'error' && '❌ Failed to save settings. Please try again.'}
+              {saveStatus === 'success' && <><IconCheck size={16} style={{marginRight: '4px', color: '#39FF14'}} />Settings saved successfully!</>}
+              {saveStatus === 'error' && <><IconX size={16} style={{marginRight: '4px', color: '#ff4444'}} />Failed to save settings. Please try again.</>}
             </div>
           )}
         </div>

@@ -1,4 +1,11 @@
 import React from 'react';
+import { 
+  IconDeviceGamepad2, 
+  IconTrophy, 
+  IconChartPie, 
+  IconFlame,
+  IconStar
+} from '@tabler/icons-react';
 import '../styles/StatsCards.css';
 
 const StatsCards = ({ stats }) => {
@@ -19,7 +26,7 @@ const StatsCards = ({ stats }) => {
             <p className="stat-label">Total Matches</p>
             <p className="stat-value">{totalMatches}</p>
           </div>
-          <div className="stat-icon">🎮</div>
+          <div className="stat-icon"><IconDeviceGamepad2 size={24} /></div>
         </div>
       </div>
 
@@ -29,7 +36,7 @@ const StatsCards = ({ stats }) => {
             <p className="stat-label">Win Rate</p>
             <p className="stat-value">{winRate}%</p>
           </div>
-          <div className="stat-icon">🏆</div>
+          <div className="stat-icon"><IconTrophy size={24} /></div>
         </div>
         <div className="stat-progress">
           <div 
@@ -45,7 +52,7 @@ const StatsCards = ({ stats }) => {
             <p className="stat-label">Wins / Losses</p>
             <p className="stat-value">{wins} / {losses}</p>
           </div>
-          <div className="stat-icon">📊</div>
+          <div className="stat-icon"><IconChartPie size={24} /></div>
         </div>
       </div>
 
@@ -55,7 +62,7 @@ const StatsCards = ({ stats }) => {
             <p className="stat-label">Current Streak</p>
             <p className="stat-value">{currentStreak}</p>
           </div>
-          <div className="stat-icon">🔥</div>
+          <div className="stat-icon"><IconFlame size={24} /></div>
         </div>
       </div>
 
@@ -65,7 +72,7 @@ const StatsCards = ({ stats }) => {
             <p className="stat-label">Best Streak</p>
             <p className="stat-value">{bestStreak}</p>
           </div>
-          <div className="stat-icon">⭐</div>
+          <div className="stat-icon"><IconStar size={24} /></div>
         </div>
       </div>
     </div>

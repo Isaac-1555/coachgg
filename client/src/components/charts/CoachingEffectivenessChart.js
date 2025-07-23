@@ -11,6 +11,7 @@ import {
   Filler
 } from 'chart.js';
 import { Line } from 'react-chartjs-2';
+import { AnalyticsIcon } from '../icons/IconSystem';
 
 ChartJS.register(
   CategoryScale,
@@ -188,7 +189,7 @@ const CoachingEffectivenessChart = ({ events, playerMatches, players }) => {
     return (
       <div className="chart-container">
         <div className="chart-empty-state">
-          <div className="empty-icon">📊</div>
+          <div className="empty-icon"><AnalyticsIcon size={48} /></div>
           <h4>No coaching effectiveness data</h4>
           <p>Schedule coaching events to track their impact on team performance!</p>
         </div>

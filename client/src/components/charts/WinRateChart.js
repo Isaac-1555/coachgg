@@ -11,6 +11,7 @@ import {
   Filler
 } from 'chart.js';
 import { Line } from 'react-chartjs-2';
+import { IconTrendingUp } from '@tabler/icons-react';
 
 ChartJS.register(
   CategoryScale,
@@ -148,7 +149,7 @@ const WinRateChart = ({ matches }) => {
     return (
       <div className="chart-container">
         <div className="chart-empty-state">
-          <div className="empty-icon">📈</div>
+          <div className="empty-icon"><IconTrendingUp size={48} /></div>
           <h4>No match data</h4>
           <p>Add some matches to see your win rate progression!</p>
         </div>

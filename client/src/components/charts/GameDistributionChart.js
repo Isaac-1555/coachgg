@@ -6,6 +6,7 @@ import {
   Legend
 } from 'chart.js';
 import { Doughnut } from 'react-chartjs-2';
+import { IconDeviceGamepad2 } from '@tabler/icons-react';
 
 ChartJS.register(ArcElement, Tooltip, Legend);
 
@@ -111,7 +112,7 @@ const GameDistributionChart = ({ matches }) => {
     return (
       <div className="chart-container">
         <div className="chart-empty-state">
-          <div className="empty-icon">🎮</div>
+          <div className="empty-icon"><IconDeviceGamepad2 size={48} /></div>
           <h4>No game data</h4>
           <p>Add matches to see your game distribution!</p>
         </div>
