@@ -6,7 +6,12 @@ import PlayerOverview from '../PlayerOverview';
 import CoachingNotes from '../CoachingNotes';
 import CreateEventModal from '../modals/CreateEventModal';
 import AddNoteModal from '../modals/AddNoteModal';
+import ManagerTeamComparisonChart from '../charts/ManagerTeamComparisonChart';
+import PlayerPerformanceTrendChart from '../charts/PlayerPerformanceTrendChart';
+import CoachingEffectivenessChart from '../charts/CoachingEffectivenessChart';
+import TeamActivityOverviewChart from '../charts/TeamActivityOverviewChart';
 import '../../styles/ManagerDashboard.css';
+import '../../styles/Charts.css';
 
 const ManagerDashboard = () => {
   const { user } = useAuth();
@@ -16,6 +21,8 @@ const ManagerDashboard = () => {
   const [events, setEvents] = useState([]);
   const [notes, setNotes] = useState([]);
   const [players, setPlayers] = useState([]);
+  const [teamStats, setTeamStats] = useState({});
+  const [playerMatches, setPlayerMatches] = useState({});
   const [loading, setLoading] = useState(true);
   const [isCreateEventOpen, setIsCreateEventOpen] = useState(false);
   const [isAddNoteOpen, setIsAddNoteOpen] = useState(false);
@@ -32,6 +39,18 @@ const ManagerDashboard = () => {
       fetchTeamPlayers();
     }
   }, [selectedTeam]);
+
+  useEffect(() => {
+    if (managedTeams.length > 0) {
+      fetchAllTeamStats();
+    }
+  }, [managedTeams]);
+
+  useEffect(() => {
+    if (players.length > 0) {
+      fetchPlayerMatches();
+    }
+  }, [players]);
 
   const fetchManagerData = async () => {
     try {
@@ -159,6 +178,93 @@ const ManagerDashboard = () => {
       setEvents(prev => prev.filter(event => event.id !== eventId));
     } catch (error) {
       console.error('Error in handleDeleteEvent:', error);
+    }
+  };
+
+  const fetchAllTeamStats = async () => {
+    try {
+      const stats = {};
+      
+      for (const team of managedTeams) {
+        // Get team members count
+        const { data: members, error: membersError } = await supabase
+          .from('team_members')
+          .select('user_id')
+          .eq('team_id', team.id);
+
+        if (membersError) {
+          console.error(`Error fetching members for team ${team.id}:`, membersError);
+          continue;
+        }
+
+        // Get team and member matches
+        const memberIds = members?.map(m => m.user_id) || [];
+        let allMatches = [];
+
+        // Get team-specific matches
+        const { data: teamMatches } = await supabase
+          .from('matches')
+          .select('*')
+          .eq('team_id', team.id);
+
+        // Get individual member matches
+        if (memberIds.length > 0) {
+          const { data: memberMatches } = await supabase
+            .from('matches')
+            .select('*')
+            .in('player_id', memberIds);
+          
+          allMatches = [...(teamMatches || []), ...(memberMatches || [])];
+        }
+
+        // Remove duplicates and calculate stats
+        const uniqueMatches = allMatches.filter((match, index, self) => 
+          index === self.findIndex(m => m.id === match.id)
+        );
+
+        const totalMatches = uniqueMatches.length;
+        const wins = uniqueMatches.filter(match => match.result === 'win').length;
+        const winRate = totalMatches > 0 ? Math.round((wins / totalMatches) * 100) : 0;
+
+        stats[team.id] = {
+          totalMatches,
+          wins,
+          winRate,
+          memberCount: members?.length || 0
+        };
+      }
+      
+      setTeamStats(stats);
+    } catch (error) {
+      console.error('Error fetching team stats:', error);
+    }
+  };
+
+  const fetchPlayerMatches = async () => {
+    try {
+      const matches = {};
+      
+      for (const player of players) {
+        const { data: playerMatches, error } = await supabase
+          .from('matches')
+          .select(`
+            *,
+            games (
+              name,
+              description
+            )
+          `)
+          .eq('player_id', player.user_id)
+          .order('match_date', { ascending: false });
+
+        if (!error && playerMatches) {
+          matches[player.user_id] = playerMatches;
+        }
+      }
+      
+      setPlayerMatches(matches);
+    } catch (error) {
+      console.error('Error fetching player matches:', error);
     }
   };
 
@@ -296,11 +402,48 @@ const ManagerDashboard = () => {
       {/* Content */}
       <div className="manager-content">
         {activeView === 'overview' && (
-          <PlayerOverview 
-            team={selectedTeam}
-            players={players}
-            managerId={user.id}
-          />
+          <div className="manager-overview">
+            {/* Manager Analytics Charts */}
+            <div className="chart-section">
+              <div className="chart-section-header">
+                <h2>Manager Analytics Dashboard</h2>
+                <p>Comprehensive insights across all managed teams and players</p>
+              </div>
+              
+              {/* Team Comparison and Activity */}
+              <div className="charts-grid">
+                <ManagerTeamComparisonChart 
+                  managedTeams={managedTeams} 
+                  teamStats={teamStats} 
+                />
+                <TeamActivityOverviewChart 
+                  playerMatches={playerMatches} 
+                  events={events} 
+                  players={players} 
+                />
+              </div>
+              
+              {/* Player Performance and Coaching Effectiveness */}
+              <div className="charts-grid">
+                <PlayerPerformanceTrendChart 
+                  players={players} 
+                  playerMatches={playerMatches} 
+                />
+                <CoachingEffectivenessChart 
+                  events={events} 
+                  playerMatches={playerMatches} 
+                  players={players} 
+                />
+              </div>
+            </div>
+
+            {/* Player Overview */}
+            <PlayerOverview 
+              team={selectedTeam}
+              players={players}
+              managerId={user.id}
+            />
+          </div>
         )}
         
         {activeView === 'calendar' && (

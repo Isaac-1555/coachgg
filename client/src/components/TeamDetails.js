@@ -1,6 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import { supabase } from '../config/supabase';
+import TeamWinRateChart from './charts/TeamWinRateChart';
+import MemberPerformanceChart from './charts/MemberPerformanceChart';
+import TeamVsIndividualChart from './charts/TeamVsIndividualChart';
+import TeamGameDistributionChart from './charts/TeamGameDistributionChart';
 import '../styles/TeamDetails.css';
+import '../styles/Charts.css';
 
 const TeamDetails = ({ team, currentUserId, onTeamUpdate }) => {
   const [members, setMembers] = useState([]);
@@ -10,6 +15,8 @@ const TeamDetails = ({ team, currentUserId, onTeamUpdate }) => {
     teamLosses: 0,
     winRate: 0
   });
+  const [teamMatches, setTeamMatches] = useState([]);
+  const [memberStats, setMemberStats] = useState({});
   const [loading, setLoading] = useState(true);
 
   const isCaptain = team.captain_id === currentUserId;
@@ -17,9 +24,15 @@ const TeamDetails = ({ team, currentUserId, onTeamUpdate }) => {
   useEffect(() => {
     if (team?.id) {
       fetchTeamMembers();
-      fetchTeamStats();
     }
   }, [team?.id]);
+
+  useEffect(() => {
+    if (members.length > 0) {
+      fetchTeamStats(); // Fetch team stats after members are loaded
+      fetchMemberStats();
+    }
+  }, [members]);
 
   const fetchTeamMembers = async () => {
     try {
@@ -52,32 +65,107 @@ const TeamDetails = ({ team, currentUserId, onTeamUpdate }) => {
     try {
       setLoading(true);
       
-      // Get team matches
-      const { data: matches, error } = await supabase
+      // Get team-specific matches (matches played as a team)
+      const { data: teamMatches, error: teamError } = await supabase
         .from('matches')
-        .select('*')
-        .eq('team_id', team.id);
+        .select(`
+          *,
+          games (
+            name,
+            description
+          )
+        `)
+        .eq('team_id', team.id)
+        .order('match_date', { ascending: false });
 
-      if (error) {
-        console.error('Error fetching team stats:', error);
-        return;
+      if (teamError) {
+        console.error('Error fetching team matches:', teamError);
       }
 
-      const totalMatches = matches?.length || 0;
-      const teamWins = matches?.filter(match => match.result === 'win').length || 0;
-      const teamLosses = matches?.filter(match => match.result === 'loss').length || 0;
-      const winRate = totalMatches > 0 ? Math.round((teamWins / totalMatches) * 100) : 0;
+      // Get individual matches from all team members for comprehensive team view
+      const memberIds = members.map(member => member.user_id);
+      let allMemberMatches = [];
+      
+      if (memberIds.length > 0) {
+        const { data: memberMatches, error: memberError } = await supabase
+          .from('matches')
+          .select(`
+            *,
+            games (
+              name,
+              description
+            )
+          `)
+          .in('player_id', memberIds)
+          .order('match_date', { ascending: false });
 
+        if (!memberError && memberMatches) {
+          allMemberMatches = memberMatches;
+        }
+      }
+
+      // Combine team matches and member matches for comprehensive view
+      const allMatches = [
+        ...(teamMatches || []),
+        ...allMemberMatches
+      ];
+
+      // Remove duplicates (in case a match has both team_id and player_id)
+      const uniqueMatches = allMatches.filter((match, index, self) => 
+        index === self.findIndex(m => m.id === match.id)
+      );
+
+      // Sort by date
+      uniqueMatches.sort((a, b) => new Date(b.match_date) - new Date(a.match_date));
+
+      // Calculate stats from team-specific matches only for team stats
+      const teamSpecificMatches = teamMatches || [];
+      const totalTeamMatches = teamSpecificMatches.length;
+      const teamWins = teamSpecificMatches.filter(match => match.result === 'win').length;
+      const teamLosses = teamSpecificMatches.filter(match => match.result === 'loss').length;
+      const teamWinRate = totalTeamMatches > 0 ? Math.round((teamWins / totalTeamMatches) * 100) : 0;
+
+      setTeamMatches(uniqueMatches); // Use all matches for charts
       setTeamStats({
-        totalMatches,
+        totalMatches: totalTeamMatches, // Team-specific stats
         teamWins,
         teamLosses,
-        winRate
+        winRate: teamWinRate
       });
     } catch (error) {
       console.error('Error in fetchTeamStats:', error);
     } finally {
       setLoading(false);
+    }
+  };
+
+  const fetchMemberStats = async () => {
+    try {
+      const memberStatsData = {};
+      
+      // Fetch individual stats for each member
+      for (const member of members) {
+        const { data: memberMatches, error } = await supabase
+          .from('matches')
+          .select('*')
+          .eq('player_id', member.user_id);
+
+        if (!error && memberMatches) {
+          const totalMatches = memberMatches.length;
+          const wins = memberMatches.filter(match => match.result === 'win').length;
+          const winRate = totalMatches > 0 ? Math.round((wins / totalMatches) * 100) : 0;
+          
+          memberStatsData[member.user_id] = {
+            totalMatches,
+            wins,
+            winRate
+          };
+        }
+      }
+      
+      setMemberStats(memberStatsData);
+    } catch (error) {
+      console.error('Error fetching member stats:', error);
     }
   };
 
@@ -176,6 +264,31 @@ const TeamDetails = ({ team, currentUserId, onTeamUpdate }) => {
           </div>
         )}
       </div>
+
+      {/* Team Performance Charts */}
+      {!loading && teamMatches.length > 0 && (
+        <div className="chart-section">
+          <div className="chart-section-header">
+            <h3>Team Performance Analytics</h3>
+            <p>Combined view of team matches and individual member performance</p>
+          </div>
+          <div className="charts-grid">
+            <TeamWinRateChart teamMatches={teamMatches} />
+            <TeamVsIndividualChart 
+              teamStats={teamStats} 
+              memberStats={memberStats} 
+              members={members} 
+            />
+          </div>
+          <div className="charts-grid">
+            <MemberPerformanceChart 
+              members={members} 
+              memberStats={memberStats} 
+            />
+            <TeamGameDistributionChart teamMatches={teamMatches} />
+          </div>
+        </div>
+      )}
 
       {/* Team Members */}
       <div className="team-members-section">

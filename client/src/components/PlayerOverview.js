@@ -50,72 +50,49 @@ const PlayerOverview = ({ team, players, managerId }) => {
           wins,
           losses,
           winRate,
-          recentMatches: recentMatches.length,
           recentWinRate,
-          avgStats,
-          lastMatch: matches?.length > 0 ? matches[0]?.match_date : null
+          avgStats
         };
       }
 
       setPlayerStats(stats);
     } catch (error) {
-      console.error('Error in fetchPlayerStats:', error);
+      console.error('Error fetching player stats:', error);
     } finally {
       setLoading(false);
     }
   };
 
   const calculateAverageStats = (matches) => {
-    if (matches.length === 0) return {};
+    if (!matches || matches.length === 0) {
+      return { kills: 0, deaths: 0, assists: 0 };
+    }
 
-    const statTotals = {};
-    const statCounts = {};
+    const validMatches = matches.filter(match => match.stats && 
+      typeof match.stats.kills === 'number' && 
+      typeof match.stats.deaths === 'number'
+    );
 
-    matches.forEach(match => {
-      if (match.stats) {
-        Object.entries(match.stats).forEach(([key, value]) => {
-          if (typeof value === 'number') {
-            statTotals[key] = (statTotals[key] || 0) + value;
-            statCounts[key] = (statCounts[key] || 0) + 1;
-          }
-        });
-      }
-    });
+    if (validMatches.length === 0) {
+      return { kills: 0, deaths: 0, assists: 0 };
+    }
 
-    const avgStats = {};
-    Object.keys(statTotals).forEach(key => {
-      avgStats[key] = Math.round((statTotals[key] / statCounts[key]) * 100) / 100;
-    });
+    const totals = validMatches.reduce((acc, match) => ({
+      kills: acc.kills + (match.stats.kills || 0),
+      deaths: acc.deaths + (match.stats.deaths || 0),
+      assists: acc.assists + (match.stats.assists || 0)
+    }), { kills: 0, deaths: 0, assists: 0 });
 
-    return avgStats;
+    return {
+      kills: Math.round((totals.kills / validMatches.length) * 10) / 10,
+      deaths: Math.round((totals.deaths / validMatches.length) * 10) / 10,
+      assists: Math.round((totals.assists / validMatches.length) * 10) / 10
+    };
   };
 
-  const formatLastMatch = (dateString) => {
-    if (!dateString) return 'Never';
-    
+  const formatDate = (dateString) => {
     const date = new Date(dateString);
-    const now = new Date();
-    const diffTime = Math.abs(now - date);
-    const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
-    
-    if (diffDays === 1) return 'Today';
-    if (diffDays === 2) return 'Yesterday';
-    if (diffDays <= 7) return `${diffDays - 1} days ago`;
-    
     return date.toLocaleDateString();
-  };
-
-  const getPerformanceColor = (winRate) => {
-    if (winRate >= 70) return '#39FF14';
-    if (winRate >= 50) return '#FFA500';
-    return '#EF4444';
-  };
-
-  const getPerformanceTrend = (overallWinRate, recentWinRate) => {
-    const diff = recentWinRate - overallWinRate;
-    if (diff > 10) return { icon: '📈', text: 'Improving', color: '#39FF14' };
-    if (diff < -10) return { icon: '📉', text: 'Declining', color: '#EF4444' };
-    return { icon: '➡️', text: 'Stable', color: '#FFA500' };
   };
 
   if (loading) {
@@ -123,18 +100,20 @@ const PlayerOverview = ({ team, players, managerId }) => {
       <div className="player-overview loading">
         <div className="loading-spinner">
           <div className="spinner"></div>
-          <p>Loading player statistics...</p>
+          <p>Loading player stats...</p>
         </div>
       </div>
     );
   }
 
-  if (players.length === 0) {
+  if (!team || players.length === 0) {
     return (
-      <div className="player-overview-empty">
-        <div className="empty-icon">👥</div>
-        <h3>No players in team</h3>
-        <p>Invite players to your team to start tracking their performance.</p>
+      <div className="player-overview">
+        <div className="empty-state">
+          <div className="empty-icon">👥</div>
+          <h3>No team selected</h3>
+          <p>Select a team to view player performance overview.</p>
+        </div>
       </div>
     );
   }
@@ -142,14 +121,13 @@ const PlayerOverview = ({ team, players, managerId }) => {
   return (
     <div className="player-overview">
       <div className="overview-header">
-        <h3>Team Performance Overview</h3>
-        <p>Track individual player statistics and performance trends</p>
+        <h2>Player Performance Overview</h2>
+        <p>Detailed statistics for {team.name} team members</p>
       </div>
 
       <div className="players-grid">
         {players.map(player => {
           const stats = playerStats[player.user_id] || {};
-          const trend = getPerformanceTrend(stats.winRate || 0, stats.recentWinRate || 0);
           
           return (
             <div key={player.user_id} className="player-card">
@@ -163,120 +141,58 @@ const PlayerOverview = ({ team, players, managerId }) => {
                     </div>
                   )}
                 </div>
-                
                 <div className="player-info">
-                  <h4 className="player-name">{player.users.username}</h4>
+                  <h3>{player.users.username}</h3>
                   {player.nickname && player.nickname !== player.users.username && (
-                    <span className="player-nickname">({player.nickname})</span>
+                    <p className="nickname">({player.nickname})</p>
                   )}
-                  <span className="player-role">{player.users.role}</span>
-                </div>
-                
-                <div className="performance-trend">
-                  <span 
-                    className="trend-icon"
-                    style={{ color: trend.color }}
-                    title={trend.text}
-                  >
-                    {trend.icon}
-                  </span>
+                  <span className="role">{player.users.role}</span>
                 </div>
               </div>
 
               <div className="player-stats">
                 <div className="stat-row">
                   <div className="stat-item">
-                    <span className="stat-label">Matches</span>
+                    <span className="stat-label">Total Matches</span>
                     <span className="stat-value">{stats.totalMatches || 0}</span>
                   </div>
                   <div className="stat-item">
                     <span className="stat-label">Win Rate</span>
-                    <span 
-                      className="stat-value"
-                      style={{ color: getPerformanceColor(stats.winRate || 0) }}
-                    >
-                      {stats.winRate || 0}%
-                    </span>
+                    <span className="stat-value">{stats.winRate || 0}%</span>
                   </div>
                 </div>
 
                 <div className="stat-row">
                   <div className="stat-item">
-                    <span className="stat-label">Recent (10)</span>
-                    <span 
-                      className="stat-value"
-                      style={{ color: getPerformanceColor(stats.recentWinRate || 0) }}
-                    >
-                      {stats.recentWinRate || 0}%
-                    </span>
+                    <span className="stat-label">Recent Form</span>
+                    <span className="stat-value">{stats.recentWinRate || 0}%</span>
                   </div>
                   <div className="stat-item">
-                    <span className="stat-label">Last Match</span>
-                    <span className="stat-value">{formatLastMatch(stats.lastMatch)}</span>
+                    <span className="stat-label">W/L</span>
+                    <span className="stat-value">{stats.wins || 0}/{stats.losses || 0}</span>
                   </div>
                 </div>
 
-                {/* Average Stats */}
-                {stats.avgStats && Object.keys(stats.avgStats).length > 0 && (
-                  <div className="avg-stats">
-                    <h5>Average Stats</h5>
-                    <div className="avg-stats-grid">
-                      {Object.entries(stats.avgStats)
-                        .slice(0, 4) // Show top 4 stats
-                        .map(([key, value]) => (
-                          <div key={key} className="avg-stat">
-                            <span className="avg-stat-label">{key.replace(/_/g, ' ')}</span>
-                            <span className="avg-stat-value">{value}</span>
-                          </div>
-                        ))}
+                {stats.avgStats && (
+                  <div className="stat-row">
+                    <div className="stat-item">
+                      <span className="stat-label">Avg KDA</span>
+                      <span className="stat-value">
+                        {stats.avgStats.kills}/{stats.avgStats.deaths}/{stats.avgStats.assists}
+                      </span>
                     </div>
                   </div>
                 )}
               </div>
 
-              <div className="player-actions">
-                <button 
-                  className="view-details-button"
-                  onClick={() => {
-                    // Could open a detailed player modal
-                    alert(`Detailed stats for ${player.users.username} - Feature coming soon!`);
-                  }}
-                >
-                  View Details
-                </button>
+              <div className="player-meta">
+                <span className="join-date">
+                  Joined: {formatDate(player.joined_at)}
+                </span>
               </div>
             </div>
           );
         })}
-      </div>
-
-      {/* Team Summary */}
-      <div className="team-summary">
-        <h3>Team Summary</h3>
-        <div className="summary-stats">
-          <div className="summary-item">
-            <span className="summary-label">Total Players</span>
-            <span className="summary-value">{players.length}</span>
-          </div>
-          <div className="summary-item">
-            <span className="summary-label">Active Players</span>
-            <span className="summary-value">
-              {Object.values(playerStats).filter(stats => stats.totalMatches > 0).length}
-            </span>
-          </div>
-          <div className="summary-item">
-            <span className="summary-label">Team Avg Win Rate</span>
-            <span className="summary-value">
-              {Object.values(playerStats).length > 0 
-                ? Math.round(
-                    Object.values(playerStats)
-                      .reduce((sum, stats) => sum + (stats.winRate || 0), 0) / 
-                    Object.values(playerStats).length
-                  )
-                : 0}%
-            </span>
-          </div>
-        </div>
       </div>
     </div>
   );

@@ -4,7 +4,11 @@ import { supabase } from '../../config/supabase';
 import AddMatchModal from '../modals/AddMatchModal';
 import MatchList from '../MatchList';
 import StatsCards from '../StatsCards';
+import WinRateChart from '../charts/WinRateChart';
+import PerformanceChart from '../charts/PerformanceChart';
+import GameDistributionChart from '../charts/GameDistributionChart';
 import '../../styles/SoloTracker.css';
+import '../../styles/Charts.css';
 
 const SoloTracker = () => {
   const { user } = useAuth();
@@ -204,6 +208,23 @@ const SoloTracker = () => {
 
       {/* Stats Cards */}
       <StatsCards stats={stats} />
+
+      {/* Charts Section */}
+      {matches.length > 0 && (
+        <div className="chart-section">
+          <div className="chart-section-header">
+            <h2>Performance Analytics</h2>
+            <p>Visual insights into your gaming performance and trends</p>
+          </div>
+          <div className="charts-grid">
+            <WinRateChart matches={matches} />
+            <PerformanceChart matches={matches} />
+          </div>
+          <div className="charts-grid single-column">
+            <GameDistributionChart matches={matches} />
+          </div>
+        </div>
+      )}
 
       {/* Matches Section */}
       <div className="matches-section">
