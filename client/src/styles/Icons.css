@@ -1,0 +1,155 @@
+/* Icon System Styles */
+.icon {
+  display: inline-block;
+  vertical-align: middle;
+  color: currentColor;
+  transition: all 0.2s ease;
+}
+
+/* Icon color variants */
+.icon-primary {
+  color: var(--color-neon-green);
+}
+
+.icon-secondary {
+  color: var(--color-neon-purple);
+}
+
+.icon-muted {
+  color: var(--color-secondary-text);
+}
+
+.icon-white {
+  color: white;
+}
+
+.icon-dark {
+  color: var(--color-background);
+}
+
+/* Icon size variants */
+.icon-xs {
+  width: 12px;
+  height: 12px;
+}
+
+.icon-sm {
+  width: 16px;
+  height: 16px;
+}
+
+.icon-md {
+  width: 20px;
+  height: 20px;
+}
+
+.icon-lg {
+  width: 24px;
+  height: 24px;
+}
+
+.icon-xl {
+  width: 32px;
+  height: 32px;
+}
+
+.icon-2xl {
+  width: 48px;
+  height: 48px;
+}
+
+/* Interactive states */
+.icon-interactive {
+  cursor: pointer;
+}
+
+.icon-interactive:hover {
+  color: var(--color-neon-green);
+  transform: scale(1.1);
+}
+
+/* Animation variants */
+.icon-spin {
+  animation: icon-spin 1s linear infinite;
+}
+
+.icon-pulse {
+  animation: icon-pulse 2s ease-in-out infinite;
+}
+
+.icon-bounce {
+  animation: icon-bounce 1s ease-in-out infinite;
+}
+
+/* Keyframes */
+@keyframes icon-spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes icon-pulse {
+  0%, 100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.5;
+  }
+}
+
+@keyframes icon-bounce {
+  0%, 20%, 53%, 80%, 100% {
+    transform: translateY(0);
+  }
+  40%, 43% {
+    transform: translateY(-8px);
+  }
+  70% {
+    transform: translateY(-4px);
+  }
+  90% {
+    transform: translateY(-2px);
+  }
+}
+
+/* Icon in buttons */
+.button .icon {
+  margin-right: 0.5rem;
+}
+
+.button .icon:last-child {
+  margin-right: 0;
+  margin-left: 0.5rem;
+}
+
+/* Icon in navigation */
+.nav-item .icon {
+  margin-right: 0.75rem;
+}
+
+/* Icon in cards */
+.card-header .icon {
+  margin-right: 0.5rem;
+}
+
+/* Icon in stats */
+.stat-icon .icon {
+  width: 2rem;
+  height: 2rem;
+}
+
+/* Responsive icon sizes */
+@media (max-width: 768px) {
+  .icon-responsive {
+    width: 18px;
+    height: 18px;
+  }
+  
+  .stat-icon .icon {
+    width: 1.5rem;
+    height: 1.5rem;
+  }
+}

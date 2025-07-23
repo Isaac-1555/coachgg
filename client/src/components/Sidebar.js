@@ -1,14 +1,24 @@
 import React from 'react';
 import { useAuth } from '../contexts/AuthContext';
+import { 
+  IconTrophy,
+  IconChartBar,
+  IconDeviceGamepad2,
+  IconUsers,
+  IconCrown,
+  IconRobot,
+  IconSettings,
+  IconLogout
+} from '@tabler/icons-react';
 import '../styles/Sidebar.css';
 
 const sidebarItems = [
-  { id: 'overview', label: 'Overview', icon: '📊' },
-  { id: 'solo', label: 'Solo', icon: '🎮' },
-  { id: 'team', label: 'Team', icon: '👥' },
-  { id: 'manager', label: 'Manager', icon: '👑' },
-  { id: 'ai-coach', label: 'AI Coach', icon: '🤖' },
-  { id: 'settings', label: 'Settings', icon: '⚙️' },
+  { id: 'overview', label: 'Overview', icon: IconChartBar },
+  { id: 'solo', label: 'Solo', icon: IconDeviceGamepad2 },
+  { id: 'team', label: 'Team', icon: IconUsers },
+  { id: 'manager', label: 'Manager', icon: IconCrown },
+  { id: 'ai-coach', label: 'AI Coach', icon: IconRobot },
+  { id: 'settings', label: 'Settings', icon: IconSettings },
 ];
 
 const Sidebar = ({ activeTab, onTabChange, user }) => {
@@ -27,7 +37,9 @@ const Sidebar = ({ activeTab, onTabChange, user }) => {
       {/* Logo */}
       <div className="sidebar-header">
         <div className="logo">
-          <div className="logo-icon">🏆</div>
+          <div className="logo-icon">
+            <IconTrophy size={20} />
+          </div>
           <div className="logo-text">
             <h1>CoachGG</h1>
             <p>Level up your game</p>
@@ -61,7 +73,9 @@ const Sidebar = ({ activeTab, onTabChange, user }) => {
                 onClick={() => onTabChange(item.id)}
                 className={`nav-item ${activeTab === item.id ? 'active' : ''}`}
               >
-                <span className="nav-icon">{item.icon}</span>
+                <span className="nav-icon">
+                  <item.icon size={18} />
+                </span>
                 <span className="nav-label">{item.label}</span>
               </button>
             </li>
@@ -72,7 +86,9 @@ const Sidebar = ({ activeTab, onTabChange, user }) => {
       {/* Footer */}
       <div className="sidebar-footer">
         <button onClick={handleLogout} className="logout-button">
-          <span className="nav-icon">🚪</span>
+          <span className="nav-icon">
+            <IconLogout size={18} />
+          </span>
           <span className="nav-label">Logout</span>
         </button>
         <div className="version-info">
