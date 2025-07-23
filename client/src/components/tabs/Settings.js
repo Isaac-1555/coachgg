@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useAuth } from '../../contexts/AuthContext';
 import { supabase } from '../../config/supabase';
 import { FREE_MODELS } from '../../config/openrouter';
+import FileUpload from '../FileUpload';
 import '../../styles/Settings.css';
 
 const Settings = () => {
@@ -188,6 +189,29 @@ const Settings = () => {
                 <option value="Manager">Manager</option>
                 <option value="Analyst">Analyst</option>
               </select>
+            </div>
+
+            <div className="form-group">
+              <label htmlFor="profile_avatar">Profile Avatar</label>
+              <FileUpload
+                currentImageUrl={formData.profile_avatar}
+                onUploadComplete={(url) => {
+                  setFormData(prev => ({
+                    ...prev,
+                    profile_avatar: url || ''
+                  }));
+                }}
+                onUploadError={(error) => {
+                  console.error('Avatar upload error:', error);
+                  setSaveStatus('error');
+                  setTimeout(() => setSaveStatus(''), 3000);
+                }}
+                bucketName="avatars"
+                className="avatar-upload"
+                placeholder="Upload Avatar"
+                maxSizeBytes={2 * 1024 * 1024} // 2MB for avatars
+              />
+              <small className="form-help">Upload a profile picture (max 2MB, JPG/PNG/GIF/WebP)</small>
             </div>
 
             <div className="form-group">

@@ -1,10 +1,12 @@
 import React, { useState } from 'react';
+import FileUpload from '../FileUpload';
 import '../../styles/CreateTeamModal.css';
 
 const CreateTeamModal = ({ onClose, onSubmit, currentUser }) => {
   const [formData, setFormData] = useState({
     name: '',
-    nickname: currentUser.username
+    nickname: currentUser.username,
+    logo_url: ''
   });
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [errors, setErrors] = useState({});
@@ -56,7 +58,8 @@ const CreateTeamModal = ({ onClose, onSubmit, currentUser }) => {
     try {
       const result = await onSubmit({
         name: formData.name.trim(),
-        nickname: formData.nickname.trim()
+        nickname: formData.nickname.trim(),
+        logo_url: formData.logo_url
       });
       
       if (result.success) {
@@ -111,6 +114,32 @@ const CreateTeamModal = ({ onClose, onSubmit, currentUser }) => {
             <small className="field-hint">
               This is how your name will appear to other team members
             </small>
+          </div>
+
+          <div className="form-group">
+            <label htmlFor="logo_url">Team Logo (Optional)</label>
+            <FileUpload
+              currentImageUrl={formData.logo_url}
+              onUploadComplete={(url) => {
+                setFormData(prev => ({
+                  ...prev,
+                  logo_url: url || ''
+                }));
+              }}
+              onUploadError={(error) => {
+                console.error('Logo upload error:', error);
+                setErrors(prev => ({
+                  ...prev,
+                  logo: 'Failed to upload logo. Please try again.'
+                }));
+              }}
+              bucketName="team-logos"
+              className="team-logo-upload"
+              placeholder="Upload Team Logo"
+              maxSizeBytes={1 * 1024 * 1024} // 1MB for team logos
+            />
+            <small className="field-hint">Upload a team logo (max 1MB, JPG/PNG/GIF/WebP)</small>
+            {errors.logo && <span className="error-text">{errors.logo}</span>}
           </div>
 
           <div className="info-box">

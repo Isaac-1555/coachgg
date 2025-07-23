@@ -1,0 +1,200 @@
+/* File Upload Component Styles */
+.file-upload {
+  width: 100%;
+}
+
+.upload-area {
+  border: 2px dashed var(--border-color);
+  border-radius: 8px;
+  padding: 20px;
+  text-align: center;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  background: var(--card-bg);
+  position: relative;
+  min-height: 120px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.upload-area:hover {
+  border-color: var(--primary-color);
+  background: rgba(57, 255, 20, 0.05);
+}
+
+.upload-area.drag-over {
+  border-color: var(--primary-color);
+  background: rgba(57, 255, 20, 0.1);
+  transform: scale(1.02);
+}
+
+.upload-area.uploading {
+  pointer-events: none;
+  opacity: 0.7;
+}
+
+.current-image {
+  position: relative;
+  width: 100%;
+  max-width: 200px;
+  margin: 0 auto;
+}
+
+.preview-image {
+  width: 100%;
+  height: auto;
+  max-height: 200px;
+  object-fit: cover;
+  border-radius: 8px;
+  display: block;
+}
+
+.image-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.7);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  border-radius: 8px;
+}
+
+.current-image:hover .image-overlay {
+  opacity: 1;
+}
+
+.change-button,
+.remove-button {
+  padding: 8px 16px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 0.9rem;
+  font-weight: 500;
+  transition: all 0.3s ease;
+}
+
+.change-button {
+  background: var(--primary-color);
+  color: var(--bg-primary);
+}
+
+.change-button:hover {
+  background: var(--primary-hover);
+}
+
+.remove-button {
+  background: #ff4444;
+  color: white;
+}
+
+.remove-button:hover {
+  background: #cc3333;
+}
+
+.change-button:disabled,
+.remove-button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.upload-placeholder {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+  color: var(--text-secondary);
+}
+
+.upload-icon {
+  font-size: 2rem;
+  opacity: 0.7;
+}
+
+.upload-text {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.upload-text strong {
+  color: var(--text-primary);
+  font-size: 1.1rem;
+}
+
+.upload-text small {
+  font-size: 0.85rem;
+  opacity: 0.8;
+}
+
+.upload-progress {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+  color: var(--primary-color);
+}
+
+.spinner {
+  width: 24px;
+  height: 24px;
+  border: 2px solid var(--border-color);
+  border-top: 2px solid var(--primary-color);
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+/* Avatar specific styles */
+.avatar-upload .upload-area {
+  max-width: 200px;
+  margin: 0 auto;
+  aspect-ratio: 1;
+  border-radius: 50%;
+}
+
+.avatar-upload .preview-image {
+  border-radius: 50%;
+  aspect-ratio: 1;
+  object-fit: cover;
+}
+
+.avatar-upload .image-overlay {
+  border-radius: 50%;
+}
+
+/* Team logo specific styles */
+.team-logo-upload .upload-area {
+  max-width: 150px;
+  margin: 0 auto;
+  aspect-ratio: 1;
+}
+
+.team-logo-upload .preview-image {
+  aspect-ratio: 1;
+  object-fit: cover;
+}
+
+/* Match screenshot styles */
+.screenshot-upload .upload-area {
+  min-height: 150px;
+  aspect-ratio: 16/9;
+  max-width: 400px;
+}
+
+.screenshot-upload .preview-image {
+  max-height: 300px;
+  width: 100%;
+  object-fit: contain;
+}

@@ -33,6 +33,7 @@ async function testSupabaseConnection() {
 
 // Import routes
 const authRoutes = require('./src/routes/auth');
+const storageRoutes = require('./src/routes/storage');
 
 // Routes
 app.get('/api', (req, res) => {
@@ -41,6 +42,9 @@ app.get('/api', (req, res) => {
 
 // Auth routes
 app.use('/api/auth', authRoutes);
+
+// Storage routes
+app.use('/api/storage', storageRoutes);
 
 app.get('/api/health', async (req, res) => {
   try {

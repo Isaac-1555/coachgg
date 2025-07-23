@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import FileUpload from '../FileUpload';
 import '../../styles/AddMatchModal.css';
 
 const AddMatchModal = ({ games, onClose, onSubmit }) => {
@@ -6,6 +7,7 @@ const AddMatchModal = ({ games, onClose, onSubmit }) => {
     game_id: '',
     result: '',
     match_date: new Date().toISOString().slice(0, 16), // YYYY-MM-DDTHH:MM
+    screenshot_url: '',
     stats: {
       kills: '',
       deaths: '',
@@ -117,6 +119,7 @@ const AddMatchModal = ({ games, onClose, onSubmit }) => {
         game_id: formData.game_id,
         result: formData.result,
         match_date: formData.match_date,
+        screenshot_url: formData.screenshot_url,
         stats: Object.keys(stats).length > 0 ? stats : null
       };
 
@@ -192,6 +195,32 @@ const AddMatchModal = ({ games, onClose, onSubmit }) => {
               className={errors.match_date ? 'error' : ''}
             />
             {errors.match_date && <span className="error-text">{errors.match_date}</span>}
+          </div>
+
+          <div className="form-group">
+            <label htmlFor="screenshot_url">Match Screenshot (Optional)</label>
+            <FileUpload
+              currentImageUrl={formData.screenshot_url}
+              onUploadComplete={(url) => {
+                setFormData(prev => ({
+                  ...prev,
+                  screenshot_url: url || ''
+                }));
+              }}
+              onUploadError={(error) => {
+                console.error('Screenshot upload error:', error);
+                setErrors(prev => ({
+                  ...prev,
+                  screenshot: 'Failed to upload screenshot. Please try again.'
+                }));
+              }}
+              bucketName="match-screenshots"
+              className="screenshot-upload"
+              placeholder="Upload Screenshot"
+              maxSizeBytes={5 * 1024 * 1024} // 5MB for screenshots
+            />
+            <small className="form-help">Upload a match screenshot (max 5MB, JPG/PNG/GIF/WebP)</small>
+            {errors.screenshot && <span className="error-text">{errors.screenshot}</span>}
           </div>
 
           <div className="stats-section">
