@@ -5,6 +5,8 @@ import Overview from './tabs/Overview';
 import SoloTracker from './tabs/SoloTracker';
 import TeamManagement from './tabs/TeamManagement';
 import ManagerDashboard from './tabs/ManagerDashboard';
+import AICoach from './tabs/AICoach';
+import Settings from './tabs/Settings';
 import '../styles/Dashboard.css';
 
 const Dashboard = () => {
@@ -22,9 +24,9 @@ const Dashboard = () => {
       case 'manager':
         return <ManagerDashboard user={user} />;
       case 'ai-coach':
-        return <div className="tab-content">AI Coach - Coming Soon</div>;
+        return <AICoach user={user} />;
       case 'settings':
-        return <div className="tab-content">Settings - Coming Soon</div>;
+        return <Settings user={user} />;
       default:
         return <Overview user={user} />;
     }
