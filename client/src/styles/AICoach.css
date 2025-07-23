@@ -28,27 +28,29 @@
   font-size: 1rem;
 }
 
-.generate-insights-button {
-  background: linear-gradient(135deg, var(--neon-green), #2ECC40);
-  color: var(--bg-primary);
+/* Generate insights button now uses add-match-button class from SoloTracker.css */
+.ai-coach .add-match-button {
+  background: var(--color-neon-green);
+  color: var(--color-background);
   border: none;
-  padding: 12px 24px;
-  border-radius: 8px;
+  border-radius: 0.75rem;
+  padding: 0.875rem 1.5rem;
   font-weight: 600;
   cursor: pointer;
+  transition: all var(--transition-speed);
   display: flex;
   align-items: center;
-  gap: 8px;
-  transition: all 0.3s ease;
-  font-size: 0.9rem;
+  gap: 0.5rem;
+  font-size: 1rem;
 }
 
-.generate-insights-button:hover:not(:disabled) {
+.ai-coach .add-match-button:hover {
+  background: #2ECC11;
   transform: translateY(-2px);
-  box-shadow: 0 8px 25px rgba(57, 255, 20, 0.3);
+  box-shadow: 0 6px 20px rgba(57, 255, 20, 0.3);
 }
 
-.generate-insights-button:disabled {
+.ai-coach .add-match-button:disabled {
   opacity: 0.6;
   cursor: not-allowed;
   transform: none;

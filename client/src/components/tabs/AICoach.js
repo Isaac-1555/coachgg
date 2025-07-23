@@ -194,7 +194,7 @@ const AICoach = () => {
           <p>Get personalized insights and coaching recommendations powered by AI</p>
         </div>
         <button 
-          className="generate-insights-button"
+          className="add-match-button"
           onClick={generateAIInsights}
           disabled={generatingInsights || matches.length === 0}
         >
@@ -204,10 +204,7 @@ const AICoach = () => {
               Analyzing...
             </>
           ) : (
-            <>
-              <span className="button-icon">🧠</span>
-              Generate AI Insights
-            </>
+            'Generate AI Insights'
           )}
         </button>
       </div>
