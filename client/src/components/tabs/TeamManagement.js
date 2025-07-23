@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useAuth } from '../../contexts/AuthContext';
 import { supabase } from '../../config/supabase';
+import { achievementService } from '../../services/achievementService';
 import CreateTeamModal from '../modals/CreateTeamModal';
 import JoinTeamModal from '../modals/JoinTeamModal';
 import TeamCard from '../TeamCard';
@@ -166,6 +167,11 @@ const TeamManagement = () => {
       setSelectedTeam(teamWithMemberInfo);
       setIsCreateModalOpen(false);
       
+      // Check for team creation achievements
+      setTimeout(() => {
+        achievementService.checkAchievements(user.id);
+      }, 1000);
+      
       return { success: true };
     } catch (error) {
       console.error('Error in handleCreateTeam:', error);
@@ -231,6 +237,11 @@ const TeamManagement = () => {
       setTeams(prev => [teamWithMemberInfo, ...prev]);
       setSelectedTeam(teamWithMemberInfo);
       setIsJoinModalOpen(false);
+      
+      // Check for team joining achievements
+      setTimeout(() => {
+        achievementService.checkAchievements(user.id);
+      }, 1000);
       
       return { success: true };
     } catch (error) {

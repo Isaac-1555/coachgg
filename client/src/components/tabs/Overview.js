@@ -3,6 +3,7 @@ import { useAuth } from '../../contexts/AuthContext';
 import { supabase } from '../../config/supabase';
 import WinRateChart from '../charts/WinRateChart';
 import GameDistributionChart from '../charts/GameDistributionChart';
+import AchievementDisplay from '../AchievementDisplay';
 import '../../styles/Overview.css';
 import '../../styles/Charts.css';
 
@@ -205,19 +206,7 @@ const Overview = ({ user }) => {
         </div>
 
         {/* Achievements */}
-        <div className="content-card">
-          <div className="card-header">
-            <h3>🏆 Recent Achievements</h3>
-            <p>Your latest unlocks and milestones</p>
-          </div>
-          <div className="card-content">
-            <div className="empty-state">
-              <div className="empty-icon">🎖️</div>
-              <h4>No achievements yet</h4>
-              <p>Play matches and complete challenges to unlock achievements!</p>
-            </div>
-          </div>
-        </div>
+        <AchievementDisplay userId={authUser?.id} />
       </div>
 
       {/* AI Coach Suggestion */}

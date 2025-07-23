@@ -7,6 +7,7 @@ import TeamManagement from './tabs/TeamManagement';
 import ManagerDashboard from './tabs/ManagerDashboard';
 import AICoach from './tabs/AICoach';
 import Settings from './tabs/Settings';
+import AchievementManager from './AchievementManager';
 import '../styles/Dashboard.css';
 
 const Dashboard = () => {
@@ -38,6 +39,7 @@ const Dashboard = () => {
       <main className="dashboard-main">
         {renderActiveTab()}
       </main>
+      <AchievementManager />
     </div>
   );
 };

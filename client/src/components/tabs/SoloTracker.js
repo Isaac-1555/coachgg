@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useAuth } from '../../contexts/AuthContext';
 import { supabase } from '../../config/supabase';
+import { achievementService } from '../../services/achievementService';
 import AddMatchModal from '../modals/AddMatchModal';
 import MatchList from '../MatchList';
 import StatsCards from '../StatsCards';
@@ -149,6 +150,11 @@ const SoloTracker = () => {
       setMatches(prev => [data, ...prev]);
       calculateStats([data, ...matches]);
       setIsAddModalOpen(false);
+      
+      // Check for new achievements
+      setTimeout(() => {
+        achievementService.checkAchievements(user.id);
+      }, 1000);
       
       return { success: true };
     } catch (error) {

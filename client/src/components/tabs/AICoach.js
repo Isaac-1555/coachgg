@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useAuth } from '../../contexts/AuthContext';
 import { supabase } from '../../config/supabase';
 import { openRouterService } from '../../config/openrouter';
+import { achievementService } from '../../services/achievementService';
 import '../../styles/AICoach.css';
 
 const AICoach = () => {
@@ -128,6 +129,9 @@ const AICoach = () => {
       insights.goalSuggestions = await openRouterService.generateGoalSuggestions(stats);
 
       setAiInsights(insights);
+      
+      // Track AI analysis usage for achievements
+      achievementService.trackAiAnalysis(user.id);
     } catch (error) {
       console.error('Error generating AI insights:', error);
       alert('Failed to generate AI insights. Please check your OpenRouter API configuration.');
@@ -139,6 +143,16 @@ const AICoach = () => {
   const analyzeSpecificMatch = async (match) => {
     try {
       setGeneratingInsights(true);
+      
+      // Clear previous specific match analysis
+      setAiInsights(prev => ({
+        ...prev,
+        specificMatch: null
+      }));
+      
+      // Switch to specific analysis tab immediately
+      setSelectedAnalysis('specific');
+      
       const analysis = await openRouterService.analyzeMatch(match, stats);
       
       // Update the specific match analysis
@@ -146,14 +160,16 @@ const AICoach = () => {
         ...prev,
         specificMatch: {
           matchId: match.id,
+          matchData: match,
           analysis
         }
       }));
       
-      setSelectedAnalysis('specific');
     } catch (error) {
       console.error('Error analyzing specific match:', error);
       alert('Failed to analyze match. Please try again.');
+      // Reset to matches tab on error
+      setSelectedAnalysis('matches');
     } finally {
       setGeneratingInsights(false);
     }
@@ -311,7 +327,11 @@ const AICoach = () => {
               <div className="matches-list">
                 <p>Click on any match to get AI analysis:</p>
                 {matches.slice(0, 10).map(match => (
-                  <div key={match.id} className="match-item" onClick={() => analyzeSpecificMatch(match)}>
+                  <div 
+                    key={match.id} 
+                    className={`match-item ${generatingInsights ? 'disabled' : ''}`} 
+                    onClick={() => !generatingInsights && analyzeSpecificMatch(match)}
+                  >
                     <div className="match-info">
                       <span className="match-game">{match.games?.name || 'Unknown Game'}</span>
                       <span className={`match-result ${match.result}`}>
@@ -322,21 +342,56 @@ const AICoach = () => {
                       </span>
                     </div>
                     <div className="analyze-button">
-                      🔍 Analyze
+                      {generatingInsights ? '⏳ Analyzing...' : '🔍 Analyze'}
                     </div>
                   </div>
                 ))}
-                
-                {aiInsights.specificMatch && (
-                  <div className="specific-match-analysis">
-                    <h4>Match Analysis</h4>
-                    <div className="ai-insight">
-                      <div className="insight-content">
-                        {aiInsights.specificMatch.analysis}
-                      </div>
-                    </div>
+              </div>
+            )}
+          </div>
+        )}
+
+        {selectedAnalysis === 'specific' && (
+          <div className="analysis-section">
+            <h3>Match Analysis</h3>
+            {generatingInsights ? (
+              <div className="ai-insight">
+                <div className="insight-loading">
+                  <div className="spinner"></div>
+                  <p>Analyzing match performance...</p>
+                </div>
+              </div>
+            ) : aiInsights.specificMatch ? (
+              <div className="specific-match-analysis">
+                <div className="match-header">
+                  <h4>
+                    {aiInsights.specificMatch.matchData?.games?.name || 'Unknown Game'} - 
+                    <span className={`result ${aiInsights.specificMatch.matchData?.result}`}>
+                      {aiInsights.specificMatch.matchData?.result?.toUpperCase()}
+                    </span>
+                  </h4>
+                  <button 
+                    className="back-button"
+                    onClick={() => setSelectedAnalysis('matches')}
+                  >
+                    ← Back to Matches
+                  </button>
+                </div>
+                <div className="ai-insight">
+                  <div className="insight-content">
+                    {aiInsights.specificMatch.analysis}
                   </div>
-                )}
+                </div>
+              </div>
+            ) : (
+              <div className="no-insights">
+                <p>No match analysis available. Go back and select a match to analyze.</p>
+                <button 
+                  className="back-button"
+                  onClick={() => setSelectedAnalysis('matches')}
+                >
+                  ← Back to Matches
+                </button>
               </div>
             )}
           </div>

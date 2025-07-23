@@ -46,7 +46,7 @@ class OpenRouterService {
       const requestBody = {
         model: currentModel,
         messages,
-        max_tokens: options.maxTokens || 500,
+        max_tokens: options.maxTokens || 600,
         temperature: options.temperature || 0.7,
         top_p: options.topP || 0.9,
         ...options
@@ -109,7 +109,7 @@ class OpenRouterService {
     const messages = [
       {
         role: 'system',
-        content: `You are an expert esports coach. Analyze the match and provide feedback in this format:
+        content: `You are an expert esports coach. Analyze the match and provide feedback in this EXACT format. COMPLETE ALL SECTIONS:
 
 MATCH ANALYSIS
 
@@ -127,7 +127,7 @@ Improvement Areas:
 Next Match Focus:
 - [One specific actionable tip]
 
-Be direct and actionable. Complete the full analysis.`
+IMPORTANT: Complete all sections. Do not cut off mid-sentence. Keep each point concise but complete.`
       },
       {
         role: 'user',
@@ -146,7 +146,7 @@ Provide structured coaching feedback.`
       }
     ];
 
-    return await this.makeRequest(messages, DEFAULT_MODEL, { maxTokens: 400 });
+    return await this.makeRequest(messages, DEFAULT_MODEL, { maxTokens: 700 });
   }
 
   async analyzePerformanceTrend(matches, timeframe = '7 days') {
@@ -157,7 +157,7 @@ Provide structured coaching feedback.`
     const messages = [
       {
         role: 'system',
-        content: `You are an esports performance analyst. Provide structured trend analysis in this EXACT format:
+        content: `You are an esports performance analyst. Provide structured trend analysis in this EXACT format. COMPLETE ALL SECTIONS:
 
 PERFORMANCE TREND ANALYSIS
 
@@ -179,7 +179,7 @@ Strategic Recommendations:
 - [Actionable advice 1]
 - [Actionable advice 2]
 
-Do not include reasoning or thinking process.`
+IMPORTANT: Complete all sections. Do not cut off mid-sentence. Keep responses concise but complete.`
       },
       {
         role: 'user',
@@ -194,14 +194,14 @@ Provide structured trend analysis.`
       }
     ];
 
-    return await this.makeRequest(messages, DEFAULT_MODEL, { maxTokens: 400 });
+    return await this.makeRequest(messages, DEFAULT_MODEL, { maxTokens: 600 });
   }
 
   async generateTeamStrategy(teamData, memberStats) {
     const messages = [
       {
         role: 'system',
-        content: `You are a professional esports team coach. Analyze team composition and performance to suggest strategic improvements and team synergy enhancements.`
+        content: `You are a professional esports team coach. Analyze team composition and performance to suggest strategic improvements and team synergy enhancements. Provide complete, actionable advice without cutting off mid-sentence.`
       },
       {
         role: 'user',
@@ -220,14 +220,14 @@ Provide structured trend analysis.`
       }
     ];
 
-    return await this.makeRequest(messages, DEFAULT_MODEL, { maxTokens: 400 });
+    return await this.makeRequest(messages, DEFAULT_MODEL, { maxTokens: 600 });
   }
 
   async generateGoalSuggestions(playerStats, preferences = {}) {
     const messages = [
       {
         role: 'system',
-        content: `You are a goal-setting coach for competitive gamers. Provide structured SMART goals in this EXACT format:
+        content: `You are a goal-setting coach for competitive gamers. Provide structured SMART goals in this EXACT format. COMPLETE ALL SECTIONS:
 
 PERSONALIZED IMPROVEMENT GOALS
 
@@ -248,7 +248,7 @@ Success Metrics:
 - [How to measure progress]
 - [Key indicators to track]
 
-Do not include reasoning or thinking process.`
+IMPORTANT: Complete all sections. Do not cut off mid-sentence. Provide actionable, specific goals.`
       },
       {
         role: 'user',
@@ -264,7 +264,7 @@ Do not include reasoning or thinking process.`
       }
     ];
 
-    return await this.makeRequest(messages, DEFAULT_MODEL, { maxTokens: 350 });
+    return await this.makeRequest(messages, DEFAULT_MODEL, { maxTokens: 450 });
   }
 }
 
