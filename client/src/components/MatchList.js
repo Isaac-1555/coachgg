@@ -1,4 +1,5 @@
 import React from 'react';
+import { IconTrash, IconTrophy, IconX } from '@tabler/icons-react';
 import '../styles/MatchList.css';
 
 const MatchList = ({ matches, onDeleteMatch }) => {
@@ -44,54 +45,45 @@ const MatchList = ({ matches, onDeleteMatch }) => {
   return (
     <div className="match-list">
       {matches.map((match) => (
-        <div key={match.id} className="match-item">
-          <div className="match-main">
-            <div className="match-result">
-              <div className={`result-indicator ${match.result}`}>
-                {match.result === 'win' ? '✓' : match.result === 'loss' ? '✗' : '−'}
-              </div>
+        <div key={match.id} className="match-card">
+          <div className="match-card-content">
+            {/* Win/Loss Indicator */}
+            <div className={`result-indicator ${match.result}`}>
+              {match.result === 'win' ? (
+                <IconTrophy size={16} />
+              ) : (
+                <IconX size={16} />
+              )}
             </div>
             
+            {/* Game Info */}
             <div className="match-info">
-              <div className="match-game">
-                <h4>{match.games?.name || 'Unknown Game'}</h4>
-                <span className={`result-text ${match.result}`}>
-                  {match.result.toUpperCase()}
-                </span>
-              </div>
-              <div className="match-stats">
-                <span className="stats-text">{formatStats(match.stats)}</span>
-              </div>
+              <div className="game-name">{match.games?.name || 'Unknown Game'}</div>
+              <div className="match-date">{formatDate(match.match_date)}</div>
             </div>
             
-            <div className="match-meta">
-              <div className="match-date">
-                {formatDate(match.match_date)}
-              </div>
-              <button 
-                className="delete-button"
-                onClick={() => handleDelete(match.id)}
-                title="Delete match"
-              >
-                🗑️
-              </button>
+            {/* Stats */}
+            <div className="match-stats">
+              {match.stats && Object.entries(match.stats)
+                .filter(([key, value]) => value !== null && value !== undefined)
+                .slice(0, 4)
+                .map(([key, value]) => (
+                  <div key={key} className="stat-box">
+                    <div className="stat-label">{key.replace(/_/g, ' ')}</div>
+                    <div className="stat-value">{value}</div>
+                  </div>
+                ))}
             </div>
+            
+            {/* Delete Button */}
+            <button 
+              className="delete-button"
+              onClick={() => handleDelete(match.id)}
+              title="Delete match"
+            >
+              <IconTrash size={16} />
+            </button>
           </div>
-          
-          {match.stats && Object.keys(match.stats).length > 3 && (
-            <div className="match-details">
-              <div className="stats-grid">
-                {Object.entries(match.stats)
-                  .filter(([key, value]) => value !== null && value !== undefined)
-                  .map(([key, value]) => (
-                    <div key={key} className="stat-item">
-                      <span className="stat-key">{key.replace(/_/g, ' ')}</span>
-                      <span className="stat-value">{value}</span>
-                    </div>
-                  ))}
-              </div>
-            </div>
-          )}
         </div>
       ))}
     </div>

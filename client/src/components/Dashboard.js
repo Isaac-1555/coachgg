@@ -18,7 +18,7 @@ const Dashboard = () => {
   const renderActiveTab = () => {
     switch (activeTab) {
       case 'overview':
-        return <Overview user={user} />;
+        return <Overview user={user} onTabChange={setActiveTab} />;
       case 'solo':
         return <SoloTracker user={user} />;
       case 'team':

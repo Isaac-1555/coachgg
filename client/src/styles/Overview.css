@@ -171,6 +171,132 @@
   box-shadow: 0 4px 12px rgba(57, 255, 20, 0.3);
 }
 
+/* Recent Matches Mac List View Styling */
+.recent-matches-list {
+  background: rgba(255, 255, 255, 0.02);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 0.5rem;
+  overflow: hidden;
+  height: 500px;
+  overflow-y: auto;
+}
+
+/* Custom scrollbar for Mac-like appearance */
+.recent-matches-list::-webkit-scrollbar {
+  width: 8px;
+}
+
+.recent-matches-list::-webkit-scrollbar-track {
+  background: rgba(255, 255, 255, 0.05);
+}
+
+.recent-matches-list::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.2);
+  border-radius: 4px;
+}
+
+.recent-matches-list::-webkit-scrollbar-thumb:hover {
+  background: rgba(255, 255, 255, 0.3);
+}
+
+.recent-match-card {
+  display: flex;
+  align-items: center;
+  padding: 0.75rem 1rem;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+  transition: background-color 0.15s ease;
+}
+
+.recent-match-card:last-child {
+  border-bottom: none;
+}
+
+.recent-match-card:hover {
+  background: rgba(255, 255, 255, 0.03);
+}
+
+.match-card-left {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  flex: 1;
+  min-width: 0;
+}
+
+.match-status-indicator {
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.match-status-indicator.win {
+  background: var(--color-neon-green);
+  color: var(--color-background);
+}
+
+.match-status-indicator.loss {
+  background: #EF4444;
+  color: white;
+}
+
+.match-status-indicator.draw {
+  background: #6B7280;
+  color: white;
+}
+
+.match-details {
+  flex: 1;
+  min-width: 0;
+}
+
+.game-title {
+  color: var(--color-primary-text);
+  font-size: 0.875rem;
+  font-weight: 500;
+  margin: 0;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.match-meta {
+  display: flex;
+  align-items: center;
+  gap: 0.25rem;
+  color: var(--color-secondary-text);
+  font-size: 0.75rem;
+  margin-top: 0.125rem;
+}
+
+.match-card-right {
+  flex-shrink: 0;
+  margin-left: 1rem;
+}
+
+.result-badge {
+  color: var(--color-secondary-text);
+  font-size: 0.75rem;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.result-badge.win {
+  color: var(--color-neon-green);
+}
+
+.result-badge.loss {
+  color: #EF4444;
+}
+
+.result-badge.draw {
+  color: #6B7280;
+}
+
 /* AI Coach Card */
 .ai-coach-card {
   background: linear-gradient(135deg, rgba(155, 48, 255, 0.1), rgba(57, 255, 20, 0.1));

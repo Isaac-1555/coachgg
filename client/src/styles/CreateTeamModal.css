@@ -17,6 +17,20 @@
   font-size: 0.9rem;
 }
 
+/* Center labels for upload components */
+.form-group:has(.team-logo-upload) {
+  align-items: center;
+  text-align: center;
+}
+
+.form-group:has(.team-logo-upload) label {
+  text-align: center;
+}
+
+.form-group:has(.team-logo-upload) .field-hint {
+  text-align: center;
+}
+
 .form-group input {
   padding: 0.75rem;
   background: #0D0D0D;
@@ -103,21 +117,36 @@
 .modal-footer {
   display: flex;
   gap: 1rem;
-  justify-content: flex-end;
+  justify-content: center;
+  align-items: flex-end;
   padding: 1.5rem;
   border-top: 1px solid #333333;
   background: rgba(0, 0, 0, 0.2);
+  align-content: center;
+  flex-wrap: nowrap;
+  flex-direction: row;
 }
 
 .cancel-button {
-  background: transparent;
-  border: 1px solid #333333;
-  color: var(--color-secondary-text);
+  background: var(--color-neon-green);
+  color: var(--color-background);
+  border: 1px solid var(--color-neon-green);
   border-radius: 0.5rem;
-  padding: 0.75rem 1.5rem;
-  font-weight: 500;
+  padding: 0.75rem 1rem;
+  font-weight: 600;
   cursor: pointer;
   transition: all var(--transition-speed);
+  height: 44px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  box-sizing: border-box;
+  vertical-align: top;
+  line-height: 1;
+  /* Override colors for cancel styling */
+  background: transparent;
+  color: var(--color-secondary-text);
+  border-color: #333333;
 }
 
 .cancel-button:hover:not(:disabled) {
@@ -128,12 +157,19 @@
 .submit-button {
   background: var(--color-neon-green);
   color: var(--color-background);
-  border: none;
+  border: 1px solid var(--color-neon-green);
   border-radius: 0.5rem;
   padding: 0.75rem 1.5rem;
   font-weight: 600;
   cursor: pointer;
   transition: all var(--transition-speed);
+  height: 44px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  box-sizing: border-box;
+  vertical-align: top;
+  line-height: 1;
 }
 
 .submit-button:hover:not(:disabled) {

@@ -40,7 +40,7 @@ const Sidebar = ({ activeTab, onTabChange, user }) => {
       <div className="sidebar-header">
         <div className="logo">
           <div className="logo-icon">
-            <IconTrophy size={20} />
+            <img src="/logo.svg" alt="CoachGG Logo" className="logo-svg" />
           </div>
           <div className="logo-text">
             <h1>CoachGG</h1>

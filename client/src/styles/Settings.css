@@ -72,6 +72,20 @@
   font-size: 0.9rem;
 }
 
+/* Center labels for upload components */
+.form-group:has(.avatar-upload) {
+  align-items: center;
+  text-align: center;
+}
+
+.form-group:has(.avatar-upload) label {
+  text-align: center;
+}
+
+.form-group:has(.avatar-upload) .form-help {
+  text-align: center;
+}
+
 .form-group input,
 .form-group select,
 .form-group textarea {

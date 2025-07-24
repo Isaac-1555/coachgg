@@ -10,12 +10,14 @@ import {
   IconTrendingUp, 
   IconClock,
   IconTarget,
-  IconRobot
+  IconRobot,
+  IconX,
+  IconCalendar
 } from '@tabler/icons-react';
 import '../../styles/Overview.css';
 import '../../styles/Charts.css';
 
-const Overview = ({ user }) => {
+const Overview = ({ user, onTabChange }) => {
   const { user: authUser } = useAuth();
   const [matches, setMatches] = useState([]);
   const [stats, setStats] = useState({
@@ -193,18 +195,27 @@ const Overview = ({ user }) => {
             ) : (
               <div className="recent-matches-list">
                 {matches.slice(0, 5).map((match) => (
-                  <div key={match.id} className="recent-match-item">
-                    <div className={`match-result ${match.result}`}>
-                      {match.result === 'win' ? '✓' : match.result === 'loss' ? '✗' : '−'}
+                  <div key={match.id} className="recent-match-card">
+                    <div className="match-card-left">
+                      <div className={`match-status-indicator ${match.result}`}>
+                        {match.result === 'win' ? (
+                          <IconTrophy size={14} />
+                        ) : (
+                          <IconX size={14} />
+                        )}
+                      </div>
+                      <div className="match-details">
+                        <div className="game-title">{match.games?.name || 'Unknown Game'}</div>
+                        <div className="match-meta">
+                          <IconCalendar size={12} />
+                          <span>{new Date(match.match_date).toLocaleDateString()}</span>
+                        </div>
+                      </div>
                     </div>
-                    <div className="match-info">
-                      <span className="match-game">{match.games?.name || 'Unknown Game'}</span>
-                      <span className="match-date">
-                        {new Date(match.match_date).toLocaleDateString()}
-                      </span>
-                    </div>
-                    <div className={`match-result-text ${match.result}`}>
-                      {match.result.toUpperCase()}
+                    <div className="match-card-right">
+                      <div className={`result-badge ${match.result}`}>
+                        {match.result.toUpperCase()}
+                      </div>
                     </div>
                   </div>
                 ))}
@@ -235,7 +246,10 @@ const Overview = ({ user }) => {
                     : `Your ${stats.winRate}% win rate has room for improvement. Focus on fundamentals and consider reviewing your gameplay patterns.`
               }
             </p>
-            <button className="ai-coach-button">
+            <button 
+              className="ai-coach-button"
+              onClick={() => onTabChange('ai-coach')}
+            >
               {matches.length === 0 ? 'Get Started' : 'View AI Analysis'}
             </button>
           </div>
