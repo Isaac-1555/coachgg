@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { IconLink } from '@tabler/icons-react';
 import '../../styles/JoinTeamModal.css';
 
 const JoinTeamModal = ({ onClose, onSubmit }) => {
@@ -78,7 +79,7 @@ const JoinTeamModal = ({ onClose, onSubmit }) => {
           </div>
 
           <div className="info-box">
-            <h4>🔗 How to Join a Team</h4>
+            <h4><IconLink size={16} /> How to Join a Team</h4>
             <ul>
               <li>Get the team ID from your team captain</li>
               <li>Paste the complete team ID in the field above</li>

@@ -4,6 +4,7 @@ import TeamWinRateChart from './charts/TeamWinRateChart';
 import MemberPerformanceChart from './charts/MemberPerformanceChart';
 import TeamVsIndividualChart from './charts/TeamVsIndividualChart';
 import TeamGameDistributionChart from './charts/TeamGameDistributionChart';
+import { IconCopy, IconCrown, IconX } from '@tabler/icons-react';
 import '../styles/TeamDetails.css';
 import '../styles/Charts.css';
 
@@ -125,13 +126,31 @@ const TeamDetails = ({ team, currentUserId, onTeamUpdate }) => {
       const teamLosses = teamSpecificMatches.filter(match => match.result === 'loss').length;
       const teamWinRate = totalTeamMatches > 0 ? Math.round((teamWins / totalTeamMatches) * 100) : 0;
 
-      setTeamMatches(uniqueMatches); // Use all matches for charts
-      setTeamStats({
-        totalMatches: totalTeamMatches, // Team-specific stats
+      // If no team-specific matches, show combined member stats for better UX
+      let displayStats = {
+        totalMatches: totalTeamMatches,
         teamWins,
         teamLosses,
         winRate: teamWinRate
-      });
+      };
+
+      if (totalTeamMatches === 0 && uniqueMatches.length > 0) {
+        // Show combined member stats when no team matches exist
+        const combinedWins = uniqueMatches.filter(match => match.result === 'win').length;
+        const combinedLosses = uniqueMatches.filter(match => match.result === 'loss').length;
+        const combinedWinRate = uniqueMatches.length > 0 ? Math.round((combinedWins / uniqueMatches.length) * 100) : 0;
+        
+        displayStats = {
+          totalMatches: uniqueMatches.length,
+          teamWins: combinedWins,
+          teamLosses: combinedLosses,
+          winRate: combinedWinRate,
+          isCombined: true // Flag to indicate these are combined member stats
+        };
+      }
+
+      setTeamMatches(uniqueMatches); // Use all matches for charts
+      setTeamStats(displayStats);
     } catch (error) {
       console.error('Error in fetchTeamStats:', error);
     } finally {
@@ -222,7 +241,7 @@ const TeamDetails = ({ team, currentUserId, onTeamUpdate }) => {
         <div className="team-title">
           <h2>{team.name}</h2>
           <div className="team-badges">
-            {isCaptain && <span className="captain-badge">👑 Captain</span>}
+            {isCaptain && <span className="captain-badge"><IconCrown size={16} /> Captain</span>}
             <span className="member-count">{members.length} members</span>
           </div>
         </div>
@@ -233,7 +252,7 @@ const TeamDetails = ({ team, currentUserId, onTeamUpdate }) => {
             onClick={copyTeamId}
             title="Copy team ID to invite players"
           >
-            📋 Copy Team ID
+            <IconCopy size={16} /> Copy Team ID
           </button>
         </div>
       </div>
@@ -241,6 +260,11 @@ const TeamDetails = ({ team, currentUserId, onTeamUpdate }) => {
       {/* Team Stats */}
       <div className="team-stats-section">
         <h3>Team Statistics</h3>
+        {teamStats.isCombined && (
+          <p className="stats-note">
+            <em>Showing combined member statistics (no team matches recorded yet)</em>
+          </p>
+        )}
         {loading ? (
           <div className="stats-loading">Loading stats...</div>
         ) : (
@@ -250,11 +274,11 @@ const TeamDetails = ({ team, currentUserId, onTeamUpdate }) => {
               <span className="stat-value">{teamStats.totalMatches}</span>
             </div>
             <div className="stat-item">
-              <span className="stat-label">Team Wins</span>
+              <span className="stat-label">{teamStats.isCombined ? 'Member Wins' : 'Team Wins'}</span>
               <span className="stat-value">{teamStats.teamWins}</span>
             </div>
             <div className="stat-item">
-              <span className="stat-label">Team Losses</span>
+              <span className="stat-label">{teamStats.isCombined ? 'Member Losses' : 'Team Losses'}</span>
               <span className="stat-value">{teamStats.teamLosses}</span>
             </div>
             <div className="stat-item">
@@ -323,7 +347,7 @@ const TeamDetails = ({ team, currentUserId, onTeamUpdate }) => {
 
               <div className="member-actions">
                 {member.user_id === team.captain_id && (
-                  <span className="captain-indicator">👑</span>
+                  <span className="captain-indicator"><IconCrown size={16} /></span>
                 )}
                 
                 {isCaptain && member.user_id !== currentUserId && (
@@ -332,7 +356,7 @@ const TeamDetails = ({ team, currentUserId, onTeamUpdate }) => {
                     onClick={() => handleRemoveMember(member.user_id)}
                     title="Remove member"
                   >
-                    ❌
+                    <IconX size={16} />
                   </button>
                 )}
               </div>
@@ -358,7 +382,7 @@ const TeamDetails = ({ team, currentUserId, onTeamUpdate }) => {
                 onClick={copyTeamId}
                 title="Copy to clipboard"
               >
-                📋
+                <IconCopy size={14} />
               </button>
             </span>
           </div>

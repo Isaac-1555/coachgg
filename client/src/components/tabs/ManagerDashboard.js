@@ -10,6 +10,7 @@ import ManagerTeamComparisonChart from '../charts/ManagerTeamComparisonChart';
 import PlayerPerformanceTrendChart from '../charts/PlayerPerformanceTrendChart';
 import CoachingEffectivenessChart from '../charts/CoachingEffectivenessChart';
 import TeamActivityOverviewChart from '../charts/TeamActivityOverviewChart';
+import { IconCrown, IconNote, IconCalendar, IconChartBar } from '@tabler/icons-react';
 import '../../styles/ManagerDashboard.css';
 import '../../styles/Charts.css';
 
@@ -312,7 +313,9 @@ const ManagerDashboard = () => {
         </div>
 
         <div className="empty-state">
-          <div className="empty-icon">👑</div>
+          <div className="empty-icon">
+            <IconCrown size={48} />
+          </div>
           <h3>No teams to manage</h3>
           <p>
             You need to be a team captain to access the manager dashboard. 
@@ -342,14 +345,14 @@ const ManagerDashboard = () => {
             className="add-note-button"
             onClick={() => setIsAddNoteOpen(true)}
           >
-            <span className="button-icon">📝</span>
+            <IconNote size={16} />
             Add Note
           </button>
           <button 
             className="create-event-button"
             onClick={() => setIsCreateEventOpen(true)}
           >
-            <span className="button-icon">📅</span>
+            <IconCalendar size={16} />
             Schedule Event
           </button>
         </div>
@@ -383,19 +386,19 @@ const ManagerDashboard = () => {
           className={`tab ${activeView === 'overview' ? 'active' : ''}`}
           onClick={() => setActiveView('overview')}
         >
-          📊 Overview
+          <IconChartBar size={16} /> Overview
         </button>
         <button 
           className={`tab ${activeView === 'calendar' ? 'active' : ''}`}
           onClick={() => setActiveView('calendar')}
         >
-          📅 Calendar
+          <IconCalendar size={16} /> Calendar
         </button>
         <button 
           className={`tab ${activeView === 'notes' ? 'active' : ''}`}
           onClick={() => setActiveView('notes')}
         >
-          📝 Notes
+          <IconNote size={16} /> Notes
         </button>
       </div>
 

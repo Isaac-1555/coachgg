@@ -1,4 +1,5 @@
 import React from 'react';
+import { IconCrown, IconDoorExit, IconCheck } from '@tabler/icons-react';
 import '../styles/TeamCard.css';
 
 const TeamCard = ({ team, isSelected, onClick, onLeave, currentUserId }) => {
@@ -32,7 +33,7 @@ const TeamCard = ({ team, isSelected, onClick, onLeave, currentUserId }) => {
           <h4 className="team-name">{team.name}</h4>
           <div className="team-meta">
             <span className="captain-info">
-              👑 {team.captain?.username || 'Unknown'}
+              <IconCrown size={14} /> {team.captain?.username || 'Unknown'}
             </span>
             {isCaptain && (
               <span className="captain-badge">Captain</span>
@@ -46,7 +47,7 @@ const TeamCard = ({ team, isSelected, onClick, onLeave, currentUserId }) => {
             onClick={handleLeaveClick}
             title="Leave team"
           >
-            🚪
+            <IconDoorExit size={16} />
           </button>
         )}
       </div>
@@ -71,7 +72,7 @@ const TeamCard = ({ team, isSelected, onClick, onLeave, currentUserId }) => {
         
         {isSelected && (
           <div className="selected-indicator">
-            ✓ Selected
+            <IconCheck size={16} /> Selected
           </div>
         )}
       </div>

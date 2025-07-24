@@ -6,6 +6,7 @@ import SoloTracker from './tabs/SoloTracker';
 import TeamManagement from './tabs/TeamManagement';
 import ManagerDashboard from './tabs/ManagerDashboard';
 import AICoach from './tabs/AICoach';
+import AdvancedCharts from './tabs/AdvancedCharts';
 import Settings from './tabs/Settings';
 import AchievementManager from './AchievementManager';
 import '../styles/Dashboard.css';
@@ -26,6 +27,8 @@ const Dashboard = () => {
         return <ManagerDashboard user={user} />;
       case 'ai-coach':
         return <AICoach user={user} />;
+      case 'advanced-charts':
+        return <AdvancedCharts user={user} />;
       case 'settings':
         return <Settings user={user} />;
       default:

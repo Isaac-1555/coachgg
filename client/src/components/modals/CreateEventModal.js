@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { IconInfoCircle } from '@tabler/icons-react';
 import '../../styles/CreateEventModal.css';
 
 const CreateEventModal = ({ onClose, onSubmit, team }) => {
@@ -199,7 +200,7 @@ const CreateEventModal = ({ onClose, onSubmit, team }) => {
 
           {team && (
             <div className="team-info">
-              <p>📋 Scheduling for team: <strong>{team.name}</strong></p>
+              <p><IconInfoCircle size={16} /> Scheduling for team: <strong>{team.name}</strong></p>
             </div>
           )}
 

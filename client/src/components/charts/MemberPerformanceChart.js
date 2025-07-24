@@ -9,6 +9,7 @@ import {
   Legend
 } from 'chart.js';
 import { Bar } from 'react-chartjs-2';
+import { IconUsers } from '@tabler/icons-react';
 
 ChartJS.register(
   CategoryScale,
@@ -156,7 +157,9 @@ const MemberPerformanceChart = ({ members, memberStats }) => {
     return (
       <div className="chart-container">
         <div className="chart-empty-state">
-          <div className="empty-icon">👥</div>
+          <div className="empty-icon">
+            <IconUsers size={48} />
+          </div>
           <h4>No member performance data</h4>
           <p>Individual member statistics will appear here once they start playing!</p>
         </div>

@@ -86,26 +86,32 @@ const SoloTracker = () => {
     const losses = matchesData.filter(match => match.result === 'loss').length;
     const winRate = totalMatches > 0 ? Math.round((wins / totalMatches) * 100) : 0;
 
-    // Calculate current streak
+    // Calculate current streak (same logic as Overview.js)
     let currentStreak = 0;
+    if (matchesData.length > 0) {
+      const lastResult = matchesData[0].result;
+      for (const match of matchesData) {
+        if (match.result === lastResult) {
+          currentStreak++;
+        } else {
+          break;
+        }
+      }
+    }
+
+    // Calculate best streak
     let bestStreak = 0;
     let tempStreak = 0;
     let lastResult = null;
 
     for (const match of matchesData) {
       if (match.result === 'win') {
-        if (lastResult === 'win' || lastResult === null) {
+        if (lastResult === 'win') {
           tempStreak++;
         } else {
           tempStreak = 1;
         }
-        if (lastResult === null) {
-          currentStreak = tempStreak;
-        }
       } else {
-        if (lastResult === null) {
-          currentStreak = 0;
-        }
         tempStreak = 0;
       }
       

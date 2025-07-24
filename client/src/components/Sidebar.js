@@ -7,6 +7,7 @@ import {
   IconUsers,
   IconCrown,
   IconRobot,
+  IconChartBar,
   IconSettings,
   IconLogout
 } from '@tabler/icons-react';
@@ -18,6 +19,7 @@ const sidebarItems = [
   { id: 'team', label: 'Team', icon: IconUsers },
   { id: 'manager', label: 'Manager', icon: IconCrown },
   { id: 'ai-coach', label: 'AI Coach', icon: IconRobot },
+  { id: 'advanced-charts', label: 'Analytics', icon: IconChartBar },
   { id: 'settings', label: 'Settings', icon: IconSettings },
 ];
 

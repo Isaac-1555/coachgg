@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import FileUpload from '../FileUpload';
+import { IconInfoCircle } from '@tabler/icons-react';
 import '../../styles/CreateTeamModal.css';
 
 const CreateTeamModal = ({ onClose, onSubmit, currentUser }) => {
@@ -143,7 +144,7 @@ const CreateTeamModal = ({ onClose, onSubmit, currentUser }) => {
           </div>
 
           <div className="info-box">
-            <h4>📋 Team Creation Info</h4>
+            <h4><IconInfoCircle size={16} /> Team Creation Info</h4>
             <ul>
               <li>You will be the team captain</li>
               <li>You can invite players using the team ID</li>

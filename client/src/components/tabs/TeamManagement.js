@@ -6,6 +6,7 @@ import CreateTeamModal from '../modals/CreateTeamModal';
 import JoinTeamModal from '../modals/JoinTeamModal';
 import TeamCard from '../TeamCard';
 import TeamDetails from '../TeamDetails';
+import { IconLink, IconUsers } from '@tabler/icons-react';
 import '../../styles/TeamManagement.css';
 
 const TeamManagement = () => {
@@ -301,7 +302,7 @@ const TeamManagement = () => {
             className="join-team-button"
             onClick={() => setIsJoinModalOpen(true)}
           >
-            <span className="button-icon">🔗</span>
+            <IconLink size={16} />
             Join Team
           </button>
           <button 
@@ -317,7 +318,9 @@ const TeamManagement = () => {
       <div className="team-content">
         {teams.length === 0 ? (
           <div className="empty-state">
-            <div className="empty-icon">👥</div>
+            <div className="empty-icon">
+              <IconUsers size={48} />
+            </div>
             <h3>No teams yet</h3>
             <p>Create your first team or join an existing one to start collaborating with other players!</p>
             <div className="empty-actions">

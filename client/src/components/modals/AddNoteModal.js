@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { IconInfoCircle } from '@tabler/icons-react';
 import '../../styles/AddNoteModal.css';
 
 const AddNoteModal = ({ onClose, onSubmit, team, players }) => {
@@ -225,7 +226,7 @@ const AddNoteModal = ({ onClose, onSubmit, team, players }) => {
 
           {team && (
             <div className="team-info">
-              <p>📋 Adding note for team: <strong>{team.name}</strong></p>
+              <p><IconInfoCircle size={16} /> Adding note for team: <strong>{team.name}</strong></p>
             </div>
           )}
 

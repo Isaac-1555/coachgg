@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { supabase } from '../config/supabase';
+import { IconUsers } from '@tabler/icons-react';
 import '../styles/PlayerOverview.css';
 
 const PlayerOverview = ({ team, players, managerId }) => {
@@ -110,7 +111,9 @@ const PlayerOverview = ({ team, players, managerId }) => {
     return (
       <div className="player-overview">
         <div className="empty-state">
-          <div className="empty-icon">👥</div>
+          <div className="empty-icon">
+            <IconUsers size={48} />
+          </div>
           <h3>No team selected</h3>
           <p>Select a team to view player performance overview.</p>
         </div>

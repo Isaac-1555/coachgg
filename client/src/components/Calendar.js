@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { IconList } from '@tabler/icons-react';
 import '../styles/Calendar.css';
 
 const Calendar = ({ events, onDeleteEvent, managerId }) => {
@@ -97,7 +98,7 @@ const Calendar = ({ events, onDeleteEvent, managerId }) => {
             className={`view-button ${viewMode === 'list' ? 'active' : ''}`}
             onClick={() => setViewMode('list')}
           >
-            📋 List View
+            <IconList size={16} /> List View
           </button>
         </div>
         
