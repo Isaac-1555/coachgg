@@ -7,7 +7,19 @@ const app = express();
 const PORT = process.env.PORT || 3001;
 
 // Middleware
-app.use(cors());
+const corsOptions = {
+  origin: process.env.NODE_ENV === 'production' 
+    ? [
+        process.env.CORS_ORIGIN || 'https://your-app-name.vercel.app',
+        /^https:\/\/.*\.vercel\.app$/  // Allow all Vercel preview deployments
+      ]
+    : ['http://localhost:5173', 'http://localhost:3000'], // Development origins
+  credentials: true,
+  methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
+  allowedHeaders: ['Content-Type', 'Authorization']
+};
+
+app.use(cors(corsOptions));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 

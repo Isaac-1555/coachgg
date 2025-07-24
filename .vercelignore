@@ -1,0 +1,22 @@
+# Vercel ignore file
+node_modules
+.env
+.env.local
+.env.development
+.env.test
+.git
+.gitignore
+README.md
+docs/
+*.log
+.DS_Store
+
+# Development files
+client/.env
+server/.env
+client/node_modules
+server/node_modules
+
+# Build artifacts
+client/dist
+server/dist
