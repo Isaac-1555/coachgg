@@ -12,10 +12,12 @@ import {
   IconTarget,
   IconRobot,
   IconX,
-  IconCalendar
+  IconCalendar,
+  IconDownload
 } from '@tabler/icons-react';
 import '../../styles/Overview.css';
 import '../../styles/Charts.css';
+import { generateProfilePDF } from '../../utils/profileExport';
 
 const Overview = ({ user, onTabChange }) => {
   const { user: authUser } = useAuth();
@@ -29,6 +31,8 @@ const Overview = ({ user, onTabChange }) => {
     hoursPlayed: 0
   });
   const [loading, setLoading] = useState(true);
+  const [achievements, setAchievements] = useState([]);
+  const [isDownloading, setIsDownloading] = useState(false);
 
   useEffect(() => {
     if (authUser?.id) {
@@ -61,6 +65,27 @@ const Overview = ({ user, onTabChange }) => {
 
       setMatches(matchesData || []);
       calculateOverviewStats(matchesData || []);
+
+      // Fetch user achievements
+      const { data: achievementsData, error: achievementsError } = await supabase
+        .from('user_achievements')
+        .select(`
+          *,
+          achievements (
+            title,
+            description,
+            icon,
+            category
+          )
+        `)
+        .eq('user_id', authUser.id)
+        .eq('unlocked', true);
+
+      if (achievementsError) {
+        console.error('Error fetching achievements:', achievementsError);
+      } else {
+        setAchievements(achievementsData || []);
+      }
     } catch (error) {
       console.error('Error in fetchUserData:', error);
     } finally {
@@ -100,6 +125,18 @@ const Overview = ({ user, onTabChange }) => {
     });
   };
 
+  const handleDownloadProfile = async () => {
+    try {
+      setIsDownloading(true);
+      await generateProfilePDF(user, stats, matches, achievements);
+    } catch (error) {
+      console.error('Error generating profile PDF:', error);
+      alert('Failed to generate profile. Please try again.');
+    } finally {
+      setIsDownloading(false);
+    }
+  };
+
   if (loading) {
     return (
       <div className="overview loading">
@@ -114,8 +151,20 @@ const Overview = ({ user, onTabChange }) => {
   return (
     <div className="overview">
       <div className="overview-header">
-        <h1>Welcome back, {user.username}!</h1>
-        <p>Ready to level up your game today?</p>
+        <div className="header-content">
+          <h1>Welcome back, {user.username}!</h1>
+          <p>Ready to level up your game today?</p>
+        </div>
+        <button 
+          className="download-profile-button"
+          onClick={handleDownloadProfile}
+          disabled={isDownloading}
+        >
+          <span className="button-icon">
+            <IconDownload size={16} />
+          </span>
+          {isDownloading ? 'Generating...' : 'Download Profile'}
+        </button>
       </div>
 
       <div className="stats-grid">

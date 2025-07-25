@@ -8,20 +8,57 @@
 
 /* Header */
 .overview-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
   margin-bottom: 2rem;
+  flex-wrap: wrap;
+  gap: 1rem;
 }
 
-.overview-header h1 {
+.header-content h1 {
   color: var(--color-primary-text);
   font-size: 2rem;
   font-weight: bold;
   margin: 0 0 0.5rem;
 }
 
-.overview-header p {
+.header-content p {
   color: var(--color-secondary-text);
   font-size: 1rem;
   margin: 0;
+}
+
+.download-profile-button {
+  background: var(--color-neon-green);
+  color: var(--color-background);
+  border: none;
+  border-radius: 0.75rem;
+  padding: 0.875rem 1.5rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all var(--transition-speed);
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 1rem;
+}
+
+.download-profile-button:hover:not(:disabled) {
+  background: #2ECC11;
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(57, 255, 20, 0.3);
+}
+
+.download-profile-button:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+  transform: none;
+}
+
+.button-icon {
+  font-size: 1.2rem;
+  font-weight: bold;
 }
 
 /* Stats Grid */
@@ -364,8 +401,18 @@
     padding: 1rem;
   }
   
-  .overview-header h1 {
+  .overview-header {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+  
+  .header-content h1 {
     font-size: 1.5rem;
+  }
+  
+  .download-profile-button {
+    width: 100%;
+    justify-content: center;
   }
   
   .stats-grid {
