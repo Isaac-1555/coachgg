@@ -9,7 +9,8 @@ import {
   IconRobot,
   IconChartBar,
   IconSettings,
-  IconLogout
+  IconLogout,
+  IconCalendar
 } from '@tabler/icons-react';
 import '../styles/Sidebar.css';
 
@@ -17,6 +18,7 @@ const sidebarItems = [
   { id: 'overview', label: 'Overview', icon: IconLayoutDashboard },
   { id: 'solo', label: 'Solo', icon: IconDeviceGamepad2 },
   { id: 'team', label: 'Team', icon: IconUsers },
+  { id: 'calendar', label: 'Calendar', icon: IconCalendar },
   { id: 'manager', label: 'Manager', icon: IconCrown },
   { id: 'ai-coach', label: 'AI Coach', icon: IconRobot },
   { id: 'advanced-charts', label: 'Analytics', icon: IconChartBar },

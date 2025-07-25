@@ -4,6 +4,7 @@ import Sidebar from './Sidebar';
 import Overview from './tabs/Overview';
 import SoloTracker from './tabs/SoloTracker';
 import TeamManagement from './tabs/TeamManagement';
+import CalendarTab from './tabs/Calendar';
 import ManagerDashboard from './tabs/ManagerDashboard';
 import AICoach from './tabs/AICoach';
 import AdvancedCharts from './tabs/AdvancedCharts';
@@ -23,6 +24,8 @@ const Dashboard = () => {
         return <SoloTracker user={user} />;
       case 'team':
         return <TeamManagement user={user} />;
+      case 'calendar':
+        return <CalendarTab user={user} />;
       case 'manager':
         return <ManagerDashboard user={user} />;
       case 'ai-coach':
