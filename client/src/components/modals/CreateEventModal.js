@@ -1,5 +1,12 @@
 import React, { useState } from 'react';
-import { IconInfoCircle } from '@tabler/icons-react';
+import { 
+  IconInfoCircle, 
+  IconCalendar, 
+  IconRun, 
+  IconDeviceGamepad2, 
+  IconMessage, 
+  IconChartBar 
+} from '@tabler/icons-react';
 import '../../styles/CreateEventModal.css';
 
 const CreateEventModal = ({ onClose, onSubmit, team }) => {
@@ -165,35 +172,35 @@ const CreateEventModal = ({ onClose, onSubmit, team }) => {
           </div>
 
           <div className="event-types">
-            <h4>📅 Common Event Types</h4>
+            <h4><IconCalendar size={16} /> Common Event Types</h4>
             <div className="event-type-buttons">
               <button 
                 type="button"
                 className="event-type-button"
                 onClick={() => setFormData(prev => ({ ...prev, title: 'Team Practice' }))}
               >
-                🏃 Practice
+                <IconRun size={16} /> Practice
               </button>
               <button 
                 type="button"
                 className="event-type-button"
                 onClick={() => setFormData(prev => ({ ...prev, title: 'Competitive Match' }))}
               >
-                🎮 Match
+                <IconDeviceGamepad2 size={16} /> Match
               </button>
               <button 
                 type="button"
                 className="event-type-button"
                 onClick={() => setFormData(prev => ({ ...prev, title: 'Team Meeting' }))}
               >
-                💬 Meeting
+                <IconMessage size={16} /> Meeting
               </button>
               <button 
                 type="button"
                 className="event-type-button"
                 onClick={() => setFormData(prev => ({ ...prev, title: 'Strategy Review' }))}
               >
-                📊 Review
+                <IconChartBar size={16} /> Review
               </button>
             </div>
           </div>

@@ -1,5 +1,16 @@
 import React, { useState } from 'react';
-import { IconList } from '@tabler/icons-react';
+import { 
+  IconList, 
+  IconCalendar, 
+  IconRun, 
+  IconDeviceGamepad2, 
+  IconMessage, 
+  IconTrophy, 
+  IconChartBar,
+  IconCalendarEvent,
+  IconChevronRight,
+  IconTrash
+} from '@tabler/icons-react';
 import '../styles/Calendar.css';
 
 const Calendar = ({ events, onDeleteEvent, managerId }) => {
@@ -55,12 +66,12 @@ const Calendar = ({ events, onDeleteEvent, managerId }) => {
 
   const getEventTypeIcon = (title) => {
     const lowerTitle = title.toLowerCase();
-    if (lowerTitle.includes('practice')) return '🏃';
-    if (lowerTitle.includes('match') || lowerTitle.includes('game')) return '🎮';
-    if (lowerTitle.includes('meeting')) return '💬';
-    if (lowerTitle.includes('tournament')) return '🏆';
-    if (lowerTitle.includes('review')) return '📊';
-    return '📅';
+    if (lowerTitle.includes('practice')) return <IconRun size={16} />;
+    if (lowerTitle.includes('match') || lowerTitle.includes('game')) return <IconDeviceGamepad2 size={16} />;
+    if (lowerTitle.includes('meeting')) return <IconMessage size={16} />;
+    if (lowerTitle.includes('tournament')) return <IconTrophy size={16} />;
+    if (lowerTitle.includes('review')) return <IconChartBar size={16} />;
+    return <IconCalendar size={16} />;
   };
 
   const getEventPriority = (date) => {
@@ -77,7 +88,7 @@ const Calendar = ({ events, onDeleteEvent, managerId }) => {
   if (events.length === 0) {
     return (
       <div className="calendar-empty">
-        <div className="empty-icon">📅</div>
+        <div className="empty-icon"><IconCalendarEvent size={64} /></div>
         <h3>No events scheduled</h3>
         <p>Schedule practice sessions, matches, and team meetings to keep your team organized.</p>
       </div>
@@ -92,7 +103,7 @@ const Calendar = ({ events, onDeleteEvent, managerId }) => {
             className={`view-button ${viewMode === 'month' ? 'active' : ''}`}
             onClick={() => setViewMode('month')}
           >
-            📅 Month View
+            <IconCalendar size={16} /> Month View
           </button>
           <button 
             className={`view-button ${viewMode === 'list' ? 'active' : ''}`}
@@ -116,7 +127,7 @@ const Calendar = ({ events, onDeleteEvent, managerId }) => {
         <div className="calendar-list">
           {/* Upcoming Events */}
           <div className="events-section">
-            <h3>🔜 Upcoming Events</h3>
+            <h3><IconChevronRight size={20} /> Upcoming Events</h3>
             {getUpcomingEvents().length === 0 ? (
               <div className="no-events">No upcoming events</div>
             ) : (
@@ -152,7 +163,7 @@ const Calendar = ({ events, onDeleteEvent, managerId }) => {
                           onClick={() => handleDeleteEvent(event.id)}
                           title="Delete event"
                         >
-                          🗑️
+                          <IconTrash size={16} />
                         </button>
                       </div>
                     </div>
@@ -165,7 +176,7 @@ const Calendar = ({ events, onDeleteEvent, managerId }) => {
           {/* Past Events */}
           {getPastEvents().length > 0 && (
             <div className="events-section">
-              <h3>📚 Recent Events</h3>
+              <h3><IconList size={20} /> Recent Events</h3>
               <div className="events-list">
                 {getPastEvents().map(event => (
                   <div 
@@ -198,7 +209,7 @@ const Calendar = ({ events, onDeleteEvent, managerId }) => {
                           onClick={() => handleDeleteEvent(event.id)}
                           title="Delete event"
                         >
-                          🗑️
+                          <IconTrash size={16} />
                         </button>
                       </div>
                     </div>
@@ -250,7 +261,7 @@ const Calendar = ({ events, onDeleteEvent, managerId }) => {
                         onClick={() => handleDeleteEvent(event.id)}
                         title="Delete event"
                       >
-                        🗑️
+                        <IconTrash size={16} />
                       </button>
                     </div>
                   </div>

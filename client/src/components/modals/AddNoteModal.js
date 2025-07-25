@@ -1,5 +1,14 @@
 import React, { useState } from 'react';
-import { IconInfoCircle } from '@tabler/icons-react';
+import { 
+  IconInfoCircle, 
+  IconNote, 
+  IconTrendingUp, 
+  IconAlertTriangle, 
+  IconTrophy, 
+  IconTarget,
+  IconRun,
+  IconChartLine
+} from '@tabler/icons-react';
 import '../../styles/AddNoteModal.css';
 
 const AddNoteModal = ({ onClose, onSubmit, team, players }) => {
@@ -14,11 +23,11 @@ const AddNoteModal = ({ onClose, onSubmit, team, players }) => {
   const [errors, setErrors] = useState({});
 
   const noteTypes = [
-    { value: 'general', label: 'General Note', icon: '📝' },
-    { value: 'improvement', label: 'Improvement', icon: '📈' },
-    { value: 'issue', label: 'Issue/Concern', icon: '⚠️' },
-    { value: 'achievement', label: 'Achievement', icon: '🏆' },
-    { value: 'strategy', label: 'Strategy', icon: '🎯' }
+    { value: 'general', label: 'General Note', icon: <IconNote size={16} /> },
+    { value: 'improvement', label: 'Improvement', icon: <IconTrendingUp size={16} /> },
+    { value: 'issue', label: 'Issue/Concern', icon: <IconAlertTriangle size={16} /> },
+    { value: 'achievement', label: 'Achievement', icon: <IconTrophy size={16} /> },
+    { value: 'strategy', label: 'Strategy', icon: <IconTarget size={16} /> }
   ];
 
   const handleInputChange = (e) => {
@@ -183,7 +192,7 @@ const AddNoteModal = ({ onClose, onSubmit, team, players }) => {
           </div>
 
           <div className="note-templates">
-            <h4>📝 Quick Templates</h4>
+            <h4><IconNote size={16} /> Quick Templates</h4>
             <div className="template-buttons">
               <button 
                 type="button"
@@ -195,7 +204,7 @@ const AddNoteModal = ({ onClose, onSubmit, team, players }) => {
                   type: 'general'
                 }))}
               >
-                🏃 Practice Review
+                <IconRun size={16} /> Practice Review
               </button>
               <button 
                 type="button"
@@ -207,7 +216,7 @@ const AddNoteModal = ({ onClose, onSubmit, team, players }) => {
                   type: 'improvement'
                 }))}
               >
-                📈 Improvement
+                <IconChartLine size={16} /> Improvement
               </button>
               <button 
                 type="button"
@@ -219,7 +228,7 @@ const AddNoteModal = ({ onClose, onSubmit, team, players }) => {
                   type: 'strategy'
                 }))}
               >
-                🎯 Strategy
+                <IconTarget size={16} /> Strategy
               </button>
             </div>
           </div>

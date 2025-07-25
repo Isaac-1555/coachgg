@@ -239,7 +239,7 @@ const CalendarTab = ({ user }) => {
 
       {userTeams.length === 0 ? (
         <div className="empty-state">
-          <div className="empty-icon">📅</div>
+          <div className="empty-icon"><IconCalendarEvent size={64} /></div>
           <h3>No Teams Found</h3>
           <p>Join a team to see scheduled events and activities!</p>
         </div>
