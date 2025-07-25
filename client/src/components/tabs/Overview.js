@@ -66,23 +66,15 @@ const Overview = ({ user, onTabChange }) => {
       setMatches(matchesData || []);
       calculateOverviewStats(matchesData || []);
 
-      // Fetch user achievements
+      // Fetch user achievements from achievements table
       const { data: achievementsData, error: achievementsError } = await supabase
-        .from('user_achievements')
-        .select(`
-          *,
-          achievements (
-            title,
-            description,
-            icon,
-            category
-          )
-        `)
-        .eq('user_id', authUser.id)
-        .eq('unlocked', true);
+        .from('achievements')
+        .select('*')
+        .eq('user_id', authUser.id);
 
       if (achievementsError) {
         console.error('Error fetching achievements:', achievementsError);
+        setAchievements([]);
       } else {
         setAchievements(achievementsData || []);
       }
