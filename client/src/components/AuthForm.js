@@ -120,7 +120,7 @@ const AuthForm = ({ onBack }) => {
         {/* Logo */}
         <div className="auth-logo">
           <div className="logo-icon">
-            <span>🏆</span>
+            <img src="/logo.svg" alt="CoachGG Logo" className="logo-svg" />
           </div>
           <h1>CoachGG</h1>
           <p>Level up your esports game</p>
