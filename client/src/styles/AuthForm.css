@@ -1,5 +1,27 @@
 /* AuthForm.css - Authentication form styling */
 
+.back-button {
+  position: absolute;
+  top: 1rem;
+  left: 1rem;
+  background: transparent;
+  border: 1px solid rgba(57, 255, 20, 0.3);
+  color: var(--color-neon-green);
+  padding: 0.5rem 1rem;
+  border-radius: 0.5rem;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  cursor: pointer;
+  font-size: 0.9rem;
+  transition: all var(--transition-speed);
+}
+
+.back-button:hover {
+  background: rgba(57, 255, 20, 0.1);
+  border-color: var(--color-neon-green);
+}
+
 .auth-container {
   min-height: 100vh;
   background: var(--color-background);

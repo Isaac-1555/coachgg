@@ -1,8 +1,9 @@
 import React, { useState } from 'react';
 import { useAuth } from '../contexts/AuthContext';
+import { IconArrowLeft } from '@tabler/icons-react';
 import '../styles/AuthForm.css';
 
-const AuthForm = () => {
+const AuthForm = ({ onBack }) => {
   const [isLogin, setIsLogin] = useState(true);
   const [formData, setFormData] = useState({
     email: '',
@@ -108,6 +109,14 @@ const AuthForm = () => {
   return (
     <div className="auth-container">
       <div className="auth-card">
+        {/* Back Button */}
+        {onBack && (
+          <button className="back-button" onClick={onBack}>
+            <IconArrowLeft size={20} />
+            Back to Home
+          </button>
+        )}
+        
         {/* Logo */}
         <div className="auth-logo">
           <div className="logo-icon">

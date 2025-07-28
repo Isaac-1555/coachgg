@@ -91,17 +91,20 @@ const Overview = ({ user, onTabChange }) => {
     const losses = matchesData.filter(match => match.result === 'loss').length;
     const winRate = totalMatches > 0 ? Math.round((wins / totalMatches) * 100) : 0;
 
-    // Calculate current streak
+    // Calculate current streak (only count win streaks)
     let currentStreak = 0;
     if (matchesData.length > 0) {
-      const lastResult = matchesData[0].result;
-      for (const match of matchesData) {
-        if (match.result === lastResult) {
-          currentStreak++;
-        } else {
-          break;
+      // Only count if the most recent match is a win
+      if (matchesData[0].result === 'win') {
+        for (const match of matchesData) {
+          if (match.result === 'win') {
+            currentStreak++;
+          } else {
+            break;
+          }
         }
       }
+      // If most recent match is a loss, streak is 0
     }
 
     // Estimate hours played (assuming 30 min average per match)
