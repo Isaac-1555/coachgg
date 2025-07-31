@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import FileUpload from '../FileUpload';
+import FileUpload from '../FileUpload.jsx';
 import '../../styles/AddMatchModal.css';
 
 const AddMatchModal = ({ games, onClose, onSubmit }) => {

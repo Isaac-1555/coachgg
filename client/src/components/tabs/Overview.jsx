@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import { useAuth } from '../../contexts/AuthContext';
 import { supabase } from '../../config/supabase';
-import WinRateChart from '../charts/WinRateChart';
-import GameDistributionChart from '../charts/GameDistributionChart';
-import AchievementDisplay from '../AchievementDisplay';
+import WinRateChart from '../charts/WinRateChart.jsx';
+import GameDistributionChart from '../charts/GameDistributionChart.jsx';
+import AchievementDisplay from '../AchievementDisplay.jsx';
 import { 
   IconDeviceGamepad2, 
   IconTrophy, 

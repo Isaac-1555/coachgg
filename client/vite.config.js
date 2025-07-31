@@ -7,13 +7,23 @@ export default defineConfig({
   build: {
     outDir: 'dist',
     sourcemap: false, // Disable source maps in production for security
+    chunkSizeWarningLimit: 1000, // Increase warning limit to 1MB
+    minify: 'terser',
+    terserOptions: {
+      compress: {
+        drop_console: true, // Remove console.logs in production
+        drop_debugger: true
+      }
+    },
     rollupOptions: {
       output: {
         manualChunks: {
-          vendor: ['react', 'react-dom'],
-          charts: ['chart.js', 'react-chartjs-2', 'chartjs-plugin-zoom'],
-          supabase: ['@supabase/supabase-js'],
-          icons: ['@tabler/icons-react']
+          'react-vendor': ['react', 'react-dom'],
+          'chart-vendor': ['chart.js', 'react-chartjs-2', 'chartjs-plugin-zoom'],
+          'ui-vendor': ['@mantine/core', '@mantine/hooks'],
+          'supabase-vendor': ['@supabase/supabase-js'],
+          'icons-vendor': ['@tabler/icons-react'],
+          'utils-vendor': ['axios', 'html2canvas', 'jspdf']
         }
       }
     }

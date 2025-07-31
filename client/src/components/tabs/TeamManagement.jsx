@@ -2,10 +2,10 @@ import React, { useState, useEffect } from 'react';
 import { useAuth } from '../../contexts/AuthContext';
 import { supabase } from '../../config/supabase';
 import { achievementService } from '../../services/achievementService';
-import CreateTeamModal from '../modals/CreateTeamModal';
-import JoinTeamModal from '../modals/JoinTeamModal';
-import TeamCard from '../TeamCard';
-import TeamDetails from '../TeamDetails';
+import CreateTeamModal from '../modals/CreateTeamModal.jsx';
+import JoinTeamModal from '../modals/JoinTeamModal.jsx';
+import TeamCard from '../TeamCard.jsx';
+import TeamDetails from '../TeamDetails.jsx';
 import { IconLink, IconUsers } from '@tabler/icons-react';
 import '../../styles/TeamManagement.css';
 

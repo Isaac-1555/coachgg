@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import { AuthProvider, useAuth } from './contexts/AuthContext';
-import LandingPage from './components/LandingPage';
-import AuthForm from './components/AuthForm';
-import Dashboard from './components/Dashboard';
+import LandingPage from './components/LandingPage.jsx';
+import AuthForm from './components/AuthForm.jsx';
+import Dashboard from './components/Dashboard.jsx';
 import './styles/main.css';
 
 function AppContent() {

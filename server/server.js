@@ -11,12 +11,14 @@ const corsOptions = {
   origin: process.env.NODE_ENV === 'production' 
     ? [
         process.env.CORS_ORIGIN || 'https://your-app-name.vercel.app',
-        /^https:\/\/.*\.vercel\.app$/  // Allow all Vercel preview deployments
+        /^https:\/\/.*\.vercel\.app$/,  // Allow all Vercel preview deployments
+        /^https:\/\/coachgg.*\.vercel\.app$/  // Specific pattern for your app
       ]
     : ['http://localhost:5173', 'http://localhost:3000'], // Development origins
   credentials: true,
   methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
-  allowedHeaders: ['Content-Type', 'Authorization']
+  allowedHeaders: ['Content-Type', 'Authorization', 'x-requested-with'],
+  optionsSuccessStatus: 200 // For legacy browser support
 };
 
 app.use(cors(corsOptions));

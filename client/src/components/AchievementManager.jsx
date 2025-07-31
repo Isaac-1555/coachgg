@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useAuth } from '../contexts/AuthContext';
 import { achievementService } from '../services/achievementService';
-import AchievementNotification from './AchievementNotification';
+import AchievementNotification from './AchievementNotification.jsx';
 
 const AchievementManager = () => {
   const { user } = useAuth();

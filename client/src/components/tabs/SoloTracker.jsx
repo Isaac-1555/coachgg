@@ -2,12 +2,12 @@ import React, { useState, useEffect } from 'react';
 import { useAuth } from '../../contexts/AuthContext';
 import { supabase } from '../../config/supabase';
 import { achievementService } from '../../services/achievementService';
-import AddMatchModal from '../modals/AddMatchModal';
-import MatchList from '../MatchList';
-import StatsCards from '../StatsCards';
-import WinRateChart from '../charts/WinRateChart';
-import PerformanceChart from '../charts/PerformanceChart';
-import GameDistributionChart from '../charts/GameDistributionChart';
+import AddMatchModal from '../modals/AddMatchModal.jsx';
+import MatchList from '../MatchList.jsx';
+import StatsCards from '../StatsCards.jsx';
+import WinRateChart from '../charts/WinRateChart.jsx';
+import PerformanceChart from '../charts/PerformanceChart.jsx';
+import GameDistributionChart from '../charts/GameDistributionChart.jsx';
 import '../../styles/SoloTracker.css';
 import '../../styles/Charts.css';
 

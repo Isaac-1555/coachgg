@@ -1,15 +1,15 @@
 import React, { useState } from 'react';
 import { useAuth } from '../contexts/AuthContext';
-import Sidebar from './Sidebar';
-import Overview from './tabs/Overview';
-import SoloTracker from './tabs/SoloTracker';
-import TeamManagement from './tabs/TeamManagement';
-import CalendarTab from './tabs/Calendar';
-import ManagerDashboard from './tabs/ManagerDashboard';
-import AICoach from './tabs/AICoach';
-import AdvancedCharts from './tabs/AdvancedCharts';
-import Settings from './tabs/Settings';
-import AchievementManager from './AchievementManager';
+import Sidebar from './Sidebar.jsx';
+import Overview from './tabs/Overview.jsx';
+import SoloTracker from './tabs/SoloTracker.jsx';
+import TeamManagement from './tabs/TeamManagement.jsx';
+import CalendarTab from './tabs/Calendar.jsx';
+import ManagerDashboard from './tabs/ManagerDashboard.jsx';
+import AICoach from './tabs/AICoach.jsx';
+import AdvancedCharts from './tabs/AdvancedCharts.jsx';
+import Settings from './tabs/Settings.jsx';
+import AchievementManager from './AchievementManager.jsx';
 import '../styles/Dashboard.css';
 
 const Dashboard = () => {
