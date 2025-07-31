@@ -10,6 +10,7 @@
   flex: 1;
   overflow-y: auto;
   background: var(--color-background);
+  margin-left: 280px;
 }
 
 .tab-content {
