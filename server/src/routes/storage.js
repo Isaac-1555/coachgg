@@ -58,13 +58,13 @@ const initializeStorageBuckets = async () => {
 initializeStorageBuckets();
 
 // Get file info
-router.get('/file/:bucket/:path(*)', authenticateToken, async (req, res) => {
+router.get('/file/:bucket/:filename', authenticateToken, async (req, res) => {
   try {
-    const { bucket, path } = req.params;
+    const { bucket, filename } = req.params;
     
     const { data, error } = await supabaseAdmin.storage
       .from(bucket)
-      .list(path);
+      .list(filename);
 
     if (error) {
       return res.status(400).json({ error: error.message });
@@ -78,9 +78,9 @@ router.get('/file/:bucket/:path(*)', authenticateToken, async (req, res) => {
 });
 
 // Delete file
-router.delete('/file/:bucket/:path(*)', authenticateToken, async (req, res) => {
+router.delete('/file/:bucket/:filename', authenticateToken, async (req, res) => {
   try {
-    const { bucket, path } = req.params;
+    const { bucket, filename } = req.params;
     const userId = req.user.id;
 
     // Verify user owns the file (basic security check)
@@ -88,7 +88,7 @@ router.delete('/file/:bucket/:path(*)', authenticateToken, async (req, res) => {
     
     const { data, error } = await supabaseAdmin.storage
       .from(bucket)
-      .remove([path]);
+      .remove([filename]);
 
     if (error) {
       return res.status(400).json({ error: error.message });
