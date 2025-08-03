@@ -19,26 +19,6 @@ import '../styles/LandingPage.css';
 
 const LandingPage = ({ onGetStarted }) => {
   const [selectedPlan, setSelectedPlan] = useState('pro');
-  const [currentVideoIndex, setCurrentVideoIndex] = useState(0);
-  const videoRef = useRef(null);
-  
-  const videos = [
-    '/Videos/7914851-hd_1920_1080_30fps.mp4',
-    '/Videos/7914800-hd_1920_1080_30fps.mp4',
-    '/Videos/9071409-hd_1920_1080_25fps.mp4'
-  ];
-
-  // Handle video cycling
-  const handleVideoEnd = () => {
-    setCurrentVideoIndex((prevIndex) => (prevIndex + 1) % videos.length);
-  };
-
-  // Update video source when index changes
-  useEffect(() => {
-    if (videoRef.current) {
-      videoRef.current.load(); // Reload the video with new source
-    }
-  }, [currentVideoIndex]);
 
   const features = [
     {
@@ -149,16 +129,15 @@ const LandingPage = ({ onGetStarted }) => {
     },
     {
       name: "Team",
-      price: "$14.99",
+      price: "$29.99",
       period: "per month",
-      description: "Built for professional teams and coaches",
+      description: "Perfect for esports teams and organizations",
       features: [
         "Everything in Pro",
         "Team management tools",
-        "Coach dashboard",
-        "Calendar integration",
-        "Team analytics",
+        "Advanced team analytics",
         "Custom branding",
+        "Dedicated support",
         "API access"
       ],
       highlighted: false,
@@ -172,7 +151,7 @@ const LandingPage = ({ onGetStarted }) => {
       <nav className="landing-nav">
         <div className="nav-container">
           <div className="nav-brand">
-            <img src="/logo.svg" alt="CoachGG Logo" className="brand-logo" />
+            <img src="/logo.svg" alt="CoachGG" className="brand-logo" />
             <span className="brand-text">CoachGG</span>
           </div>
           <div className="nav-links">
@@ -206,7 +185,7 @@ const LandingPage = ({ onGetStarted }) => {
               </button>
               <button className="cta-secondary">
                 <IconDeviceGamepad2 size={20} />
-                Watch Demo
+                Explore Features
               </button>
             </div>
             <div className="hero-stats">
@@ -225,19 +204,72 @@ const LandingPage = ({ onGetStarted }) => {
             </div>
           </div>
           <div className="hero-visual">
-            <div className="hero-video-container">
-              <video 
-                ref={videoRef}
-                autoPlay 
-                muted 
-                playsInline
-                className="hero-video"
-                onEnded={handleVideoEnd}
-              >
-                <source src={videos[currentVideoIndex]} type="video/mp4" />
-                Your browser does not support the video tag.
-              </video>
-              <div className="video-overlay"></div>
+            <div className="dashboard-mockup">
+              <div className="mockup-window">
+                <div className="window-header">
+                  <div className="window-controls">
+                    <span className="control red"></span>
+                    <span className="control yellow"></span>
+                    <span className="control green"></span>
+                  </div>
+                  <div className="window-title">CoachGG Dashboard</div>
+                </div>
+                
+                <div className="mockup-content">
+                  <div className="stats-grid">
+                    <div className="stat-card">
+                      <div className="stat-icon"><IconTarget size={24} /></div>
+                      <div className="stat-value">94%</div>
+                      <div className="stat-label">Win Rate</div>
+                    </div>
+                    <div className="stat-card">
+                      <div className="stat-icon"><IconBolt size={24} /></div>
+                      <div className="stat-value">2.4</div>
+                      <div className="stat-label">K/D Ratio</div>
+                    </div>
+                    <div className="stat-card">
+                      <div className="stat-icon"><IconChartLine size={24} /></div>
+                      <div className="stat-value">+15%</div>
+                      <div className="stat-label">Improvement</div>
+                    </div>
+                  </div>
+                  
+                  <div className="chart-mockup">
+                    <div className="chart-header">Performance Trend</div>
+                    <div className="chart-bars">
+                      <div className="bar" style={{height: '60%'}}></div>
+                      <div className="bar" style={{height: '75%'}}></div>
+                      <div className="bar" style={{height: '85%'}}></div>
+                      <div className="bar" style={{height: '90%'}}></div>
+                      <div className="bar" style={{height: '95%'}}></div>
+                    </div>
+                  </div>
+                  
+                  <div className="ai-coach-mockup">
+                    <div className="ai-message">
+                      <div className="ai-avatar"><IconRobot size={24} /></div>
+                      <div className="ai-text">
+                        "Your aim accuracy improved by 12% this week. Focus on crosshair placement for even better results!"
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              
+              <div className="floating-elements">
+                <div className="floating-card card-1">
+                  <div className="card-icon"><IconTrophy size={20} /></div>
+                  <div className="card-text">Rank Up!</div>
+                </div>
+                <div className="floating-card card-2">
+                  <div className="card-icon"><IconBolt size={20} /></div>
+                  <div className="card-text">5 Win Streak</div>
+                </div>
+                <div className="floating-card card-3">
+                  <div className="card-icon"><IconStar size={20} /></div>
+                  <div className="card-text">MVP</div>
+                </div>
+              </div>
             </div>
           </div>
         </div>
@@ -254,10 +286,10 @@ const LandingPage = ({ onGetStarted }) => {
             {features.map((feature, index) => (
               <div key={index} className="feature-card">
                 <div className="feature-icon">
-                  <feature.icon size={24} />
+                  <feature.icon size={32} />
                 </div>
-                <h3>{feature.title}</h3>
-                <p>{feature.description}</p>
+                <h3 className="feature-title">{feature.title}</h3>
+                <p className="feature-description">{feature.description}</p>
               </div>
             ))}
           </div>
@@ -269,7 +301,7 @@ const LandingPage = ({ onGetStarted }) => {
         <div className="container">
           <div className="section-header">
             <h2>See CoachGG in Action</h2>
-            <p>Explore the interface designed for competitive gamers</p>
+            <p>Explore our intuitive interface designed for competitive gamers</p>
           </div>
           <div className="screenshots-grid">
             {screenshots.map((screenshot, index) => (
@@ -296,29 +328,24 @@ const LandingPage = ({ onGetStarted }) => {
           </div>
           <div className="pricing-grid">
             {pricingPlans.map((plan, index) => (
-              <div 
-                key={index} 
-                className={`pricing-card ${plan.highlighted ? 'highlighted' : ''}`}
-              >
-                {plan.highlighted && (
-                  <div className="plan-badge">Most Popular</div>
-                )}
+              <div key={index} className={`pricing-card ${plan.highlighted ? 'highlighted' : ''}`}>
+                {plan.highlighted && <div className="popular-badge">Most Popular</div>}
                 <div className="plan-header">
-                  <h3>{plan.name}</h3>
+                  <h3 className="plan-name">{plan.name}</h3>
                   <div className="plan-price">
                     <span className="price">{plan.price}</span>
                     <span className="period">/{plan.period}</span>
                   </div>
                   <p className="plan-description">{plan.description}</p>
                 </div>
-                <div className="plan-features">
+                <ul className="plan-features">
                   {plan.features.map((feature, featureIndex) => (
-                    <div key={featureIndex} className="feature-item">
-                      <IconCheck size={16} className="check-icon" />
-                      <span>{feature}</span>
-                    </div>
+                    <li key={featureIndex}>
+                      <IconCheck size={16} />
+                      {feature}
+                    </li>
                   ))}
-                </div>
+                </ul>
                 <button 
                   className={`plan-button ${plan.highlighted ? 'primary' : 'secondary'}`}
                   onClick={onGetStarted}
@@ -337,19 +364,19 @@ const LandingPage = ({ onGetStarted }) => {
           <div className="footer-content">
             <div className="footer-brand">
               <div className="brand">
-                <img src="/logo.svg" alt="CoachGG Logo" className="brand-logo" />
+                <img src="/logo.svg" alt="CoachGG" className="brand-logo" />
                 <span className="brand-text">CoachGG</span>
               </div>
-              <p>Empowering gamers to reach their competitive potential</p>
+              <p>Level up your esports game with AI-powered coaching and analytics.</p>
               <div className="social-links">
-                <a href="#" className="social-link">
-                  <IconBrandDiscord size={20} />
+                <a href="#" aria-label="Discord">
+                  <IconBrandDiscord size={24} />
                 </a>
-                <a href="#" className="social-link">
-                  <IconBrandTwitter size={20} />
+                <a href="#" aria-label="Twitter">
+                  <IconBrandTwitter size={24} />
                 </a>
-                <a href="#" className="social-link">
-                  <IconBrandGithub size={20} />
+                <a href="#" aria-label="GitHub">
+                  <IconBrandGithub size={24} />
                 </a>
               </div>
             </div>
@@ -358,19 +385,19 @@ const LandingPage = ({ onGetStarted }) => {
                 <h4>Product</h4>
                 <a href="#features">Features</a>
                 <a href="#pricing">Pricing</a>
-                <a href="#">API</a>
+                <a href="#screenshots">Screenshots</a>
               </div>
               <div className="link-group">
                 <h4>Support</h4>
                 <a href="#">Help Center</a>
-                <a href="#">Contact</a>
-                <a href="#">Status</a>
+                <a href="#">Contact Us</a>
+                <a href="#">Bug Reports</a>
               </div>
               <div className="link-group">
-                <h4>Company</h4>
-                <a href="#">About</a>
-                <a href="#">Blog</a>
-                <a href="#">Careers</a>
+                <h4>Legal</h4>
+                <a href="#">Privacy Policy</a>
+                <a href="#">Terms of Service</a>
+                <a href="#">Cookie Policy</a>
               </div>
             </div>
           </div>
