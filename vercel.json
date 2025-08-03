@@ -2,19 +2,15 @@
   "version": 2,
   "builds": [
     {
-      "src": "client/**",
+      "src": "client/package.json",
       "use": "@vercel/static-build",
       "config": {
-        "distDir": "dist",
-        "buildCommand": "cd client && npm run build"
+        "distDir": "dist"
       }
     },
     {
       "src": "server/server.js",
-      "use": "@vercel/node",
-      "config": {
-        "maxLambdaSize": "50mb"
-      }
+      "use": "@vercel/node"
     }
   ],
   "routes": [
@@ -26,15 +22,5 @@
       "src": "/(.*)",
       "dest": "/client/dist/$1"
     }
-  ],
-  "env": {
-    "NODE_ENV": "production"
-  },
-  "functions": {
-    "server/server.js": {
-      "maxDuration": 30,
-      "memory": 1024
-    }
-  },
-  "installCommand": "npm install && cd client && npm install && cd ../server && npm install"
+  ]
 }
