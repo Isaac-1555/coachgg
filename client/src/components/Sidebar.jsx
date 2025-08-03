@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { useAuth } from '../contexts/AuthContext';
 import { 
   IconTrophy,
@@ -10,7 +10,9 @@ import {
   IconChartBar,
   IconSettings,
   IconLogout,
-  IconCalendar
+  IconCalendar,
+  IconMenu2,
+  IconX
 } from '@tabler/icons-react';
 import '../styles/Sidebar.css';
 
@@ -27,6 +29,19 @@ const sidebarItems = [
 
 const Sidebar = ({ activeTab, onTabChange, user }) => {
   const { signOut } = useAuth();
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const [isMobile, setIsMobile] = useState(false);
+
+  // Check if we're on mobile
+  useEffect(() => {
+    const checkMobile = () => {
+      setIsMobile(window.innerWidth <= 768);
+    };
+    
+    checkMobile();
+    window.addEventListener('resize', checkMobile);
+    return () => window.removeEventListener('resize', checkMobile);
+  }, []);
 
   const handleLogout = async () => {
     try {
@@ -36,20 +51,63 @@ const Sidebar = ({ activeTab, onTabChange, user }) => {
     }
   };
 
+  const handleTabChange = (tabId) => {
+    onTabChange(tabId);
+    if (isMobile) {
+      setIsMobileMenuOpen(false);
+    }
+  };
+
+  const toggleMobileMenu = () => {
+    setIsMobileMenuOpen(!isMobileMenuOpen);
+  };
+
   return (
-    <div className="sidebar">
-      {/* Logo */}
-      <div className="sidebar-header">
-        <div className="logo">
-          <div className="logo-icon">
-            <img src="/logo.svg" alt="CoachGG Logo" className="logo-svg" />
-          </div>
-          <div className="logo-text">
-            <h1>CoachGG</h1>
-            <p>Level up your game</p>
+    <>
+      {/* Mobile Menu Button */}
+      {isMobile && (
+        <button 
+          className="mobile-menu-toggle"
+          onClick={toggleMobileMenu}
+          aria-label="Toggle menu"
+        >
+          <IconMenu2 size={24} />
+        </button>
+      )}
+
+      {/* Mobile Overlay */}
+      {isMobile && isMobileMenuOpen && (
+        <div 
+          className="mobile-overlay"
+          onClick={() => setIsMobileMenuOpen(false)}
+        />
+      )}
+
+      {/* Sidebar */}
+      <div className={`sidebar ${isMobile ? (isMobileMenuOpen ? 'mobile-open' : 'mobile-closed') : ''}`}>
+        {/* Mobile Close Button */}
+        {isMobile && (
+          <button 
+            className="mobile-close-btn"
+            onClick={() => setIsMobileMenuOpen(false)}
+            aria-label="Close menu"
+          >
+            <IconX size={24} />
+          </button>
+        )}
+
+        {/* Logo */}
+        <div className="sidebar-header">
+          <div className="logo">
+            <div className="logo-icon">
+              <img src="/logo.svg" alt="CoachGG Logo" className="logo-svg" />
+            </div>
+            <div className="logo-text">
+              <h1>CoachGG</h1>
+              <p>Level up your game</p>
+            </div>
           </div>
         </div>
-      </div>
 
       {/* User Profile */}
       <div className="user-profile">
@@ -74,7 +132,7 @@ const Sidebar = ({ activeTab, onTabChange, user }) => {
           {sidebarItems.map((item) => (
             <li key={item.id}>
               <button
-                onClick={() => onTabChange(item.id)}
+                onClick={() => handleTabChange(item.id)}
                 className={`nav-item ${activeTab === item.id ? 'active' : ''}`}
               >
                 <span className="nav-icon">
@@ -100,7 +158,8 @@ const Sidebar = ({ activeTab, onTabChange, user }) => {
           <p>Level up your esports</p>
         </div>
       </div>
-    </div>
+      </div>
+    </>
   );
 };
 

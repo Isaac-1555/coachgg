@@ -53,3 +53,15 @@
   0% { transform: rotate(0deg); }
   100% { transform: rotate(360deg); }
 }
+
+/* Mobile responsiveness */
+@media (max-width: 768px) {
+  .dashboard-main {
+    margin-left: 0;
+    padding-top: 5rem; /* Account for mobile menu button */
+  }
+  
+  .tab-content {
+    padding: 1rem;
+  }
+}
