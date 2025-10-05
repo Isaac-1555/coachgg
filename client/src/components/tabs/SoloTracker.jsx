@@ -11,7 +11,7 @@ import GameDistributionChart from '../charts/GameDistributionChart.jsx';
 import '../../styles/SoloTracker.css';
 import '../../styles/Charts.css';
 
-const SoloTracker = () => {
+const SoloTracker = ({ onTabChange }) => {
   const { user } = useAuth();
   const [matches, setMatches] = useState([]);
   const [games, setGames] = useState([]);
@@ -134,6 +134,8 @@ const SoloTracker = () => {
 
   const handleAddMatch = async (matchData) => {
     try {
+      const wasFirstMatch = matches.length === 0;
+      
       const { data, error } = await supabase
         .from('matches')
         .insert({
@@ -164,6 +166,13 @@ const SoloTracker = () => {
       setTimeout(() => {
         achievementService.checkAchievements(user.id);
       }, 1000);
+      
+      // If this was the first match, switch to Overview tab
+      if (wasFirstMatch && onTabChange) {
+        setTimeout(() => {
+          onTabChange('overview');
+        }, 1500); // Small delay to let user see the success state
+      }
       
       return { success: true };
     } catch (error) {
