@@ -72,11 +72,11 @@ const Dashboard = () => {
       case 'calendar':
         return <CalendarTab user={user} />;
       case 'manager':
-        return <ManagerDashboard user={user} />;
+        return <ManagerDashboard user={user} onTabChange={handleTabChange} />;
       case 'ai-coach':
         return <AICoach user={user} />;
       case 'advanced-charts':
-        return <AdvancedCharts user={user} />;
+        return <AdvancedCharts user={user} onTabChange={handleTabChange} />;
       case 'settings':
         return <Settings user={user} />;
       default:

@@ -14,7 +14,7 @@ import { IconCrown, IconNote, IconCalendar, IconChartBar } from '@tabler/icons-r
 import '../../styles/ManagerDashboard.css';
 import '../../styles/Charts.css';
 
-const ManagerDashboard = () => {
+const ManagerDashboard = ({ onTabChange }) => {
   const { user } = useAuth();
   const [activeView, setActiveView] = useState('overview');
   const [managedTeams, setManagedTeams] = useState([]);
@@ -323,7 +323,7 @@ const ManagerDashboard = () => {
           </p>
           <button 
             className="cta-button"
-            onClick={() => window.location.hash = '#team'}
+            onClick={() => onTabChange('team')}
           >
             Go to Team Management
           </button>

@@ -15,7 +15,7 @@ import {
 import '../../styles/AdvancedCharts.css';
 import '../../styles/Charts.css';
 
-const AdvancedCharts = () => {
+const AdvancedCharts = ({ onTabChange }) => {
   const { user } = useAuth();
   const [matches, setMatches] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -160,7 +160,7 @@ const AdvancedCharts = () => {
           </p>
           <button 
             className="cta-button"
-            onClick={() => window.location.hash = '#solo'}
+            onClick={() => onTabChange('solo', { openAddMatchModal: true })}
           >
             Add Your First Match
           </button>
