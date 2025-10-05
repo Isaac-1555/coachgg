@@ -17,6 +17,7 @@ const Dashboard = () => {
   const { user } = useAuth();
   const [activeTab, setActiveTab] = useState(null);
   const [isLoadingTab, setIsLoadingTab] = useState(true);
+  const [openAddMatchModal, setOpenAddMatchModal] = useState(false);
 
   // Determine initial tab based on whether user has matches
   useEffect(() => {
@@ -53,12 +54,19 @@ const Dashboard = () => {
     determineInitialTab();
   }, [user]);
 
+  const handleTabChange = (tab, options = {}) => {
+    setActiveTab(tab);
+    if (options.openAddMatchModal) {
+      setOpenAddMatchModal(true);
+    }
+  };
+
   const renderActiveTab = () => {
     switch (activeTab) {
       case 'overview':
-        return <Overview user={user} onTabChange={setActiveTab} />;
+        return <Overview user={user} onTabChange={handleTabChange} />;
       case 'solo':
-        return <SoloTracker user={user} onTabChange={setActiveTab} />;
+        return <SoloTracker user={user} onTabChange={handleTabChange} openAddMatchModal={openAddMatchModal} setOpenAddMatchModal={setOpenAddMatchModal} />;
       case 'team':
         return <TeamManagement user={user} />;
       case 'calendar':
@@ -80,7 +88,7 @@ const Dashboard = () => {
   if (isLoadingTab || activeTab === null) {
     return (
       <div className="dashboard">
-        <Sidebar activeTab="overview" onTabChange={setActiveTab} user={user} />
+        <Sidebar activeTab="overview" onTabChange={handleTabChange} user={user} />
         <main className="dashboard-main">
           <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100%' }}>
             <p>Loading...</p>
@@ -92,7 +100,7 @@ const Dashboard = () => {
 
   return (
     <div className="dashboard">
-      <Sidebar activeTab={activeTab} onTabChange={setActiveTab} user={user} />
+      <Sidebar activeTab={activeTab} onTabChange={handleTabChange} user={user} />
       <main className="dashboard-main">
         {renderActiveTab()}
       </main>

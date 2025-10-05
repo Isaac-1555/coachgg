@@ -117,21 +117,34 @@
 }
 
 .cta-button {
-  background: var(--color-neon-green);
-  color: var(--color-background);
+  background: var(--color-neon-purple);
+  color: var(--color-primary-text);
   border: none;
   border-radius: 0.75rem;
   padding: 1rem 2rem;
-  font-weight: 600;
-  font-size: 1rem;
+  font-weight: 700;
+  font-size: 1.1rem;
   cursor: pointer;
   transition: all var(--transition-speed);
+  box-shadow: 0 6px 20px rgba(155, 48, 255, 0.5), 0 0 30px rgba(155, 48, 255, 0.3);
+  letter-spacing: 0.3px;
+  text-transform: none;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  min-width: 200px;
 }
 
 .cta-button:hover {
-  background: #2ECC11;
-  transform: translateY(-2px);
-  box-shadow: 0 6px 20px rgba(57, 255, 20, 0.3);
+  background: #B24DFF;
+  transform: translateY(-3px);
+  box-shadow: 0 8px 30px rgba(155, 48, 255, 0.7), 0 0 40px rgba(155, 48, 255, 0.5);
+}
+
+.cta-button:active {
+  transform: translateY(-1px);
+  box-shadow: 0 4px 20px rgba(155, 48, 255, 0.6), 0 0 25px rgba(155, 48, 255, 0.4);
 }
 
 /* Responsive Design */

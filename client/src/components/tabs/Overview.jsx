@@ -234,7 +234,12 @@ const Overview = ({ user, onTabChange }) => {
                 <div className="empty-icon"><IconTarget size={48} /></div>
                 <h4>No matches yet</h4>
                 <p>Start tracking your games to see your progress here!</p>
-                <button className="cta-button">Add Your First Match</button>
+                <button 
+                  className="cta-button"
+                  onClick={() => onTabChange('solo', { openAddMatchModal: true })}
+                >
+                  Add Your First Match
+                </button>
               </div>
             ) : (
               <div className="recent-matches-list">

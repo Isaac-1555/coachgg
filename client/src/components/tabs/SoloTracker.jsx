@@ -11,7 +11,7 @@ import GameDistributionChart from '../charts/GameDistributionChart.jsx';
 import '../../styles/SoloTracker.css';
 import '../../styles/Charts.css';
 
-const SoloTracker = ({ onTabChange }) => {
+const SoloTracker = ({ onTabChange, openAddMatchModal, setOpenAddMatchModal }) => {
   const { user } = useAuth();
   const [matches, setMatches] = useState([]);
   const [games, setGames] = useState([]);
@@ -32,6 +32,17 @@ const SoloTracker = ({ onTabChange }) => {
       fetchMatches();
     }
   }, [user?.id]);
+
+  // Handle openAddMatchModal prop from Dashboard
+  useEffect(() => {
+    if (openAddMatchModal) {
+      setIsAddModalOpen(true);
+      // Reset the prop after opening
+      if (setOpenAddMatchModal) {
+        setOpenAddMatchModal(false);
+      }
+    }
+  }, [openAddMatchModal, setOpenAddMatchModal]);
 
   const fetchGames = async () => {
     try {
